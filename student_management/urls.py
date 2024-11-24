@@ -8,4 +8,6 @@ from student_management import student_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('base/', student_views.base,),
+
+    path('login/', student_views.login, name='login'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
