@@ -9,5 +9,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('base/', student_views.base,),
 
-    path('login/', student_views.login, name='login'),
+    path('', student_views.LoginView.as_view(), name='login'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

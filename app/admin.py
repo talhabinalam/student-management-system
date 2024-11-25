@@ -2,25 +2,28 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
 
-
 class CustomUserAdmin(UserAdmin):
-    # Add the new fields to list_display
-    list_display = ['username', 'email', 'user_type', 'photo']
+    model = CustomUser
 
-    # Ensure the new fields appear in the add/edit forms
-    fieldsets = UserAdmin.fieldsets + (
-        ('Custom Fields', {
-            'fields': ('user_type', 'photo'),
+    # Customize the order of fields
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Personal Info', {'fields': ('username', 'first_name', 'last_name')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Important Dates', {'fields': ('last_login', 'date_joined')}),
+        ('Custom Fields', {'fields': ('user_type', 'photo')}),
+    )
+
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2', 'user_type'),
         }),
     )
 
-    # For the form used to create a new user
-    add_fieldsets = UserAdmin.add_fieldsets + (
-        ('Custom Fields', {
-            'fields': ('user_type', 'photo'),
-        }),
-    )
+    list_display = ('email', 'username', 'user_type', 'is_staff')
+    search_fields = ('email', 'username', 'user_type')
+    ordering = ('email',)
 
-
-# Register the CustomUser with the updated admin class
+# Register the customized admin class
 admin.site.register(CustomUser, CustomUserAdmin)
