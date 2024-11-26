@@ -8,7 +8,7 @@ class CustomUserAdmin(UserAdmin):
     # Customize the order of fields
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal Info', {'fields': ('username', 'first_name', 'last_name')}),
+        ('Personal Info', {'fields': ('first_name', 'last_name')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important Dates', {'fields': ('last_login', 'date_joined')}),
         ('Custom Fields', {'fields': ('user_type', 'photo')}),
@@ -24,6 +24,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'username', 'user_type', 'is_staff')
     search_fields = ('email', 'username', 'user_type')
     ordering = ('email',)
+    readonly_fields = ('last_login', 'date_joined')
 
 # Register the customized admin class
 admin.site.register(CustomUser, CustomUserAdmin)

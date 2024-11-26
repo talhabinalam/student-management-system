@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.views import View
+from django.contrib import messages
 
 
 def base(request):
@@ -26,7 +27,9 @@ class LoginView(View):
             elif user.user_type == 'TEACHER':
                 return HttpResponse('This is Teacher Dashboard')
             else:
-                return HttpResponse('User not matched')
+                messages.error(request, "username or password invalid!")
+                return redirect('login')
         else:
-            return HttpResponse('Invalid email or password')
+            messages.error(request, )
+            return redirect('login')
 

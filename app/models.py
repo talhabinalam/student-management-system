@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
     CHOICES = (
@@ -14,7 +14,7 @@ class CustomUser(AbstractUser):
     photo = models.ImageField(upload_to='media/profile_pic', null=True, blank=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.email
