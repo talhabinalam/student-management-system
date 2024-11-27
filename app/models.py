@@ -5,10 +5,9 @@ class CustomUser(AbstractUser):
     CHOICES = (
         ('HOD', 'HOD'),
         ('STUDENT', 'STUDENT'),
-        ('TEACHER', 'TEACHER')
+        ('STAFF', 'STAFF')
     )
 
-    username = models.CharField(max_length=30, null=True, blank=True)
     email = models.EmailField(unique=True)
     user_type = models.CharField(max_length=30, choices=CHOICES)
     photo = models.ImageField(upload_to='media/profile_pic', null=True, blank=True)

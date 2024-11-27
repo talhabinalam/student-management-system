@@ -4,32 +4,4 @@ from django.views import View
 from django.contrib import messages
 
 
-def base(request):
-    return render(request, 'base.html')
-
-
-class LoginView(View):
-    def get(self, request):
-        return render(request, 'accounts/login.html')
-
-    def post(self, request):
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        user = authenticate(request, email=email, password=password)
-        print(user)
-        if user is not None:
-            login(request, user)
-
-            if user.user_type == 'HOD':
-                return HttpResponse("This is HOD Dashboard")
-            elif user.user_type == 'STUDENT':
-                return HttpResponse("This is STUDENT Dashboard")
-            elif user.user_type == 'TEACHER':
-                return HttpResponse('This is Teacher Dashboard')
-            else:
-                messages.error(request, "username or password invalid!")
-                return redirect('login')
-        else:
-            messages.error(request, )
-            return redirect('login')
 

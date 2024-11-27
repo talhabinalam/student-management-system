@@ -7,7 +7,7 @@ class CustomUserAdmin(UserAdmin):
 
     # Customize the order of fields
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('username', 'email', 'password')}),
         ('Personal Info', {'fields': ('first_name', 'last_name')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important Dates', {'fields': ('last_login', 'date_joined')}),
@@ -17,7 +17,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'user_type'),
+            'fields': ('username', 'email', 'password1', 'password2', 'user_type'),
         }),
     )
 
