@@ -119,17 +119,17 @@
            
               <div class="dropdown-menu">
                  <div class="user-header">
+                 
                     <div class="avatar avatar-sm">
-                    
                         {% if user.photo %}
                        <img src="{{ user.photo.url }}" alt="User Image" class="avatar-img rounded-circle">
                             {% else %}
                        <img src="{% static 'assets/img/profiles/avatar-01.jpg' %}" alt="User Image" class="avatar-img rounded-circle">
                         {% endif %}
-                        
                     </div>
+                 
                     <div class="user-text">
-                       <h6>{{ user.first_name|title }} {{ user.last_name|title }}</h6>
+                       <h7>{{ user.first_name|title }} {{ user.last_name|title }}</h7>
                         {% if user.user_type == 'HOD' %}
                            <p class="text-muted mb-0"><small>Head of Department</small></p>
                         {% else %}

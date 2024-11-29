@@ -49,3 +49,7 @@ def user_logout(request):
 @login_required()
 def profile(request):
     return render(request, 'profile.html')
+
+@login_required()
+def update_profile(request):
+    return render(request, 'update-profile.html')

@@ -37,11 +37,6 @@
                                {% endif %} 
                               <div class="user-Location"><i class="fas fa-map-marker-alt"></i>&nbsp; {{ user.address }}</div>
                            </div>
-                           <div class="col-auto profile-btn">
-                              <a href="#" class="btn btn-primary">
-                              Edit
-                              </a>
-                           </div>
                         </div>
                      </div>
                      <div class="profile-menu">
@@ -62,7 +57,8 @@
                                     <div class="card-body">
                                        <h5 class="card-title d-flex justify-content-between">
                                           <span>Personal Details</span>
-                                          <a class="edit-link" data-toggle="modal" href="#edit_personal_details"><i class="far fa-edit mr-1"></i>Edit</a>
+                                          <a class="edit-link" href="{% url 'update_profile' %}"><i class="far fa-edit mr-1"></i>Edit</a>
+                                           
                                        </h5>
                                        <div class="row">
                                           <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Name</p>
