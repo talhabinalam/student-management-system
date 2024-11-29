@@ -15,4 +15,12 @@ urlpatterns = [
     # hod
     path('hod/home/', hod_views.home, name='hod-home'),
 
+    # staff
+    # path('staff/home/', staff_views.home, name='staff-home'),
+
+    # student
+#     path('student/home/', student_views.home, name='student-home'),
+
+    path('profile/', views.profile, name='profile'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

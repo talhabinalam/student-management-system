@@ -7,8 +7,8 @@ class CustomUserAdmin(UserAdmin):
 
     # Customize the order of fields
     fieldsets = (
-        (None, {'fields': ('username', 'email', 'password')}),
-        ('Personal Info', {'fields': ('first_name', 'last_name')}),
+        (None, {'fields': ('email', 'password')}),
+        ('Personal Info', {'fields': ('first_name', 'last_name', 'date_of_birth', 'mobile', 'address')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important Dates', {'fields': ('last_login', 'date_joined')}),
         ('Custom Fields', {'fields': ('user_type', 'photo')}),
@@ -17,12 +17,12 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'email', 'password1', 'password2', 'user_type'),
+            'fields': ('email', 'first_name', 'last_name', 'password1', 'password2', 'user_type'),
         }),
     )
 
-    list_display = ('email', 'username', 'user_type', 'is_staff')
-    search_fields = ('email', 'username', 'user_type')
+    list_display = ('email', 'first_name', 'last_name', 'user_type', 'is_staff')
+    search_fields = ('email', 'user_type')
     ordering = ('email',)
     readonly_fields = ('last_login', 'date_joined')
 
