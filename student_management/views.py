@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.hashers import check_password
+from django.contrib import messages
+from app.models import *
 
 
 def get_redirect_url(user):
@@ -50,6 +53,66 @@ def user_logout(request):
 def profile(request):
     return render(request, 'profile.html')
 
+
 @login_required()
 def update_profile(request):
+    user = request.user
+
+    if request.method == 'POST':
+        user.first_name = request.POST.get('first_name', user.first_name)
+        user.last_name = request.POST.get('last_name', user.last_name)
+        user.date_of_birth = request.POST.get('date_of_birth', user.date_of_birth)
+        user.mobile = request.POST.get('mobile', user.mobile)
+        user.address = request.POST.get('address', user.address)
+
+        if 'photo' in request.FILES:
+            user.photo = request.FILES['photo']
+
+        user.save()
+        messages.success(request, "Profile has been updated")
+        return redirect('profile')
+
+
     return render(request, 'update-profile.html')
+
+
+@login_required()
+def change_password(request):
+    user = request.user
+
+    if request.method == 'POST':
+        password = request.POST.get('password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if not user.check_password(password):
+            messages.error(request, "Old password is incorrect!")
+            return redirect('profile')
+
+        if new_password != confirm_password:
+            messages.error(request, "New password did not match!")
+            return redirect('profile')
+
+        if password == new_password:
+            messages.error(request, "New password must be different!")
+            return redirect('profile')
+
+        if len(new_password) < 8:
+            messages.error(request, "Password must be at least 8 characters!")
+            return redirect('profile')
+
+        user.set_password(new_password)
+        user.save()
+
+        update_session_auth_hash(request, user)
+
+        messages.success(request, "Password was successfully updated!")
+        return redirect('profile')
+    return render(request, 'profile.html')
+
+
+
+
+
+
+
