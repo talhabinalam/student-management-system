@@ -49,3 +49,37 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+class Course(models.Model):
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Session(models.Model):
+    session_start = models.CharField(max_length=50)
+    session_end = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.session_start} - {self.session_end}"
+
+
+CHOICES= (
+    ('Male', 'Male'),
+    ('Female', 'Female'),
+)
+
+class Student(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    gender = models.CharField(max_length=50, choices=CHOICES)
+    course = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
+    session = models.ForeignKey(Session, on_delete=models.DO_NOTHING)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"

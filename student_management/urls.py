@@ -13,7 +13,8 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
 
     # hod
-    path('hod/home/', hod_views.home, name='hod-home'),
+    path('hod/home/', hod_views.home, name='hod_home'),
+    path('hod/student/add/', hod_views.add_student, name='add_student'),
 
     # staff
     # path('staff/home/', staff_views.home, name='staff-home'),

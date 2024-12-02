@@ -3,18 +3,12 @@
     <div class="header">
         <div class="header-left">
         
-            {% if user.user_type == 'HOD' %}
-               <a href="{% url 'hod-home' %}" class="logo">
-            {% elif user.user_type == 'STAFF' %}
-                <a href="#" class="logo">
-            {% else %}
-            <a href="#" class="logo">
-            {% endif %}
-           <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+           <a href="{% url 'login' %}" class="logo">
+            <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
            </a>
         
            {% if user.user_type == 'HOD' %}
-               <a href="{% url 'hod-home' %}" class="logo logo-small">
+               <a href="{% url 'hod_home' %}" class="logo logo-small">
             {% elif user.user_type == 'STAFF' %}
                 <a href="#" class="logo logo-small">
             {% else %}

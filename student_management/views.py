@@ -2,18 +2,16 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.hashers import check_password
 from django.contrib import messages
-from app.models import *
 
 
 def get_redirect_url(user):
     if user.user_type == 'HOD':
-        return 'hod-home'
+        return 'hod_home'
     elif user.user_type == 'STUDENT':
-        return 'student-home'
+        return 'student_home'
     elif user.user_type == 'TEACHER':
-        return 'teacher-home'
+        return 'teacher_home'
     else:
         return 'login'  # Fallback for undefined user types
 
@@ -72,7 +70,6 @@ def update_profile(request):
         messages.success(request, "Profile has been updated")
         return redirect('profile')
 
-
     return render(request, 'update-profile.html')
 
 
@@ -103,7 +100,6 @@ def change_password(request):
 
         user.set_password(new_password)
         user.save()
-
         update_session_auth_hash(request, user)
 
         messages.success(request, "Password was successfully updated!")

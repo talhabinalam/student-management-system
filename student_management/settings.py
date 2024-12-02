@@ -132,6 +132,7 @@ LOGIN_URL = '/'
 #Bootstrap alert tags
 from django.contrib.messages import constants as messages
 
+
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }

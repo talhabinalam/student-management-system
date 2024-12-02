@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser
+from .models import *
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
@@ -26,5 +26,19 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
     readonly_fields = ('last_login', 'date_joined')
 
+
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ('name', 'created_at', 'updated_at', )
+    readonly_fields = ('created_at', 'updated_at')
+
+
+class StudentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'gender', 'course', 'session', 'created_at', 'updated_at')
+    readonly_fields = ('created_at', 'updated_at')
+
+
 # Register the customized admin class
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(Course, CourseAdmin)
+admin.site.register(Session)
+admin.site.register(Student, StudentAdmin)
