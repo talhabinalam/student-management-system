@@ -58,12 +58,14 @@ def update_profile(request):
     user = request.user
 
     if request.method == 'POST':
+        # Update the CustomUser fields
         user.first_name = request.POST.get('first_name', user.first_name)
         user.last_name = request.POST.get('last_name', user.last_name)
         user.date_of_birth = request.POST.get('date_of_birth', user.date_of_birth)
         user.mobile = request.POST.get('mobile', user.mobile)
         user.address = request.POST.get('address', user.address)
 
+        #Update photo if new file is uploaded
         if 'photo' in request.FILES:
             user.photo = request.FILES['photo']
 
