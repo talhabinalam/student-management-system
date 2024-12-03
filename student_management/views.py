@@ -9,9 +9,11 @@ def get_redirect_url(user):
     if user.user_type == 'HOD':
         return 'hod_home'
     elif user.user_type == 'STUDENT':
-        return 'student_home'
+        # return 'student_home'
+        return HttpResponse("Student home")
     elif user.user_type == 'TEACHER':
-        return 'teacher_home'
+        # return 'teacher_home'
+        pass
     else:
         return 'login'  # Fallback for undefined user types
 
@@ -24,15 +26,14 @@ def user_login(request):
             user = authenticate(request, username=email, password=password)
             if user is not None:
                 login(request, user)
+                # return redirect(get_redirect_url(request.user))
                 if user.user_type == 'HOD':
-                    return redirect('hod-home')
+                    return redirect('hod_home')
+
                 elif user.user_type == 'STUDENT':
-                    return HttpResponse("This is STUDENT Dashboard")
-                elif user.user_type == 'TEACHER':
-                    return HttpResponse('This is Teacher Dashboard')
-                else:
-                    messages.error(request, "Invalid user type!")
-                    return redirect('login')
+                    return HttpResponse("Student home")
+
+
             else:
                 messages.error(request, "Invalid email or password!")
                 return redirect('login')
@@ -41,18 +42,18 @@ def user_login(request):
         return redirect(get_redirect_url(request.user))
 
 
-@login_required
+
 def user_logout(request):
     logout(request)
     return redirect('login')
 
 
-@login_required()
+
 def profile(request):
     return render(request, 'profile.html')
 
 
-@login_required()
+
 def update_profile(request):
     user = request.user
 
@@ -73,7 +74,7 @@ def update_profile(request):
     return render(request, 'update-profile.html')
 
 
-@login_required()
+
 def change_password(request):
     user = request.user
 

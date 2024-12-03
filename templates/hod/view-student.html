@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+               <div class="page-header">
+                  <div class="row align-items-center">
+                     <div class="col">
+                        <h3 class="page-title">Students</h3>
+                        <ul class="breadcrumb">
+                           <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                           <li class="breadcrumb-item active">Students List</li>
+                        </ul>
+                     </div>
+                     <div class="col-auto text-right float-right ml-auto">
+                        <a href="#" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a>
+                        <a href="add-student.html" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="card card-table">
+                        <div class="card-body">
+                           <div class="table-responsive">
+                              <table class="table table-hover table-center mb-0 datatable">
+                                 <thead>
+                                    <tr style="text-align: center">
+                                       <th>ID</th>
+                                       <th>Name</th>
+                                       <th>Course</th>
+                                       <th>Session</th>
+                                       <th>Mobile</th>
+                                       <th>Address</th>
+                                       <th class="text-right">Action</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                 {% for student in students %}
+                                    <tr style="text-align: center">
+                                       <td>{{ student.id }}</td>
+                                       <td>
+                                          <h2 class="table-avatar">
+                                        <a href="{% url 'student_details' student.id %}" class="avatar avatar-sm mr-2">
+                                            {% if student.user.photo %}
+                                                <img class="avatar-img rounded-circle" src="{{ student.user.photo.url }}" alt="User Image" style="width: 35px; height: 35px; object-fit: cover;">
+                                            {% else %}
+                                                <img class="avatar-img rounded-circle" src="{% static 'assets/img/profiles/avatar-01.jpg' %}" alt="User Image" style="width: 35px; height: 35px; object-fit: cover;">
+                                            {% endif %}
+                                        </a>
+                                         <a href="{% url 'student_details' student.id %}">{{ student.user.first_name }} {{ student.user.last_name }}</a>
+                                          </h2>
+                                       </td>
+                                       <td>{{ student.course }}</td>
+                                       <td>{{ student.session }}</td>
+                                       <td>{{ student.user.mobile }}</td>
+                                       <td>{{ student.user.address }}</td>
+                                       <td class="text-right">
+                                          <div class="actions">
+                                             <a href="edit-student.html" class="btn btn-sm bg-success-light mr-2">
+                                             <i class="fas fa-pen"></i>
+                                             </a>
+                                             <a href="#" class="btn btn-sm bg-danger-light">
+                                             <i class="fas fa-trash"></i>
+                                             </a>
+                                          </div>
+                                       </td>
+                                    </tr>
+                                 {% endfor %}
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+        </div>
+
+    
+{% endblock %}

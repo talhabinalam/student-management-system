@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Student Details</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="students.html">Student</a></li>
+                        <li class="breadcrumb-item active">Student Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="about-info text-center">
+                            <!-- Image Display -->
+                            
+                            <div class="mb-3">
+                                {% if student.user.photo %}
+                                <img src="{{ student.user.photo.url }}" class="rounded-circle" alt="User Image" 
+                                     style="width: 200px; height: 200px; object-fit: cover;">
+                                {% else %}
+                                <img src="{% static 'assets/img/profiles/avatar-01.jpg' %}" class="rounded-circle" alt="User Image"
+                                style="width: 200px; height: 200px; object-fit: cover;">
+                                {% endif %}
+                            </div>
+                            <br>
+                            <!-- Information Display -->
+                            <div class="media-body d-flex flex-column align-items-center">
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <span class="title-span font-weight-bold">Full Name : </span>
+                                        <span class="info-span">{{ student.user.first_name }} {{ student.user.last_name }}</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <span class="title-span font-weight-bold">Course : </span>
+                                        <span class="info-span">{{ student.course }}</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <span class="title-span font-weight-bold">Session : </span>
+                                        <span class="info-span">{{ student.session }}</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <span class="title-span font-weight-bold">Mobile : </span>
+                                        <span class="info-span">{{ student.user.mobile }}</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <span class="title-span font-weight-bold">Email : </span>
+                                        <span class="info-span">
+                                            <a href="mailto:{{ student.user.email }}">{{ student.user.email }}</a>
+                                        </span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <span class="title-span font-weight-bold">Gender : </span>
+                                        <span class="info-span">{{ student.gender }}</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <span class="title-span font-weight-bold">DOB : </span>
+                                        <span class="info-span">{{ student.user.date_of_birth }}</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <span class="title-span font-weight-bold">Address : </span>
+                                        <span class="info-span">{{ student.user.address }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

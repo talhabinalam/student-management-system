@@ -5,7 +5,6 @@ from django.contrib import messages
 from app.models import *
 
 
-@login_required()
 def home(request):
     return render(request, 'hod/home.html')
 
@@ -51,9 +50,6 @@ def add_student(request):
         course = Course.objects.get(id=course_id)
         session = Session.objects.get(id=session_id)
 
-        print(course)
-        print(session)
-
         student = Student(
             user=user,
             gender=gender,
@@ -70,3 +66,22 @@ def add_student(request):
         'sessions' : session,
     }
     return render(request, 'hod/add-student.html', context)
+
+
+
+def student_list(request):
+    students = Student.objects.all()
+
+    context = {
+        'students':students,
+    }
+    return render(request, 'hod/view-student.html', context)
+
+
+
+def student_details(request, id):
+    student = Student.objects.get(id=id)
+    context = {
+        'student':student,
+    }
+    return render(request, 'hod/student-details.html', context)
