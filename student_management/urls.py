@@ -18,6 +18,7 @@ urlpatterns = [
     path('hod/student/view/', hod_views.student_list, name='student_list'),
     path('hod/student/details/<int:id>/', hod_views.student_details, name='student_details'),
     path('hod/student/update/<int:id>/', hod_views.update_student, name='update_student'),
+    path('hod/student/delete/<int:id>/', hod_views.delete_student, name='delete_student'),
 
     # staff
     # path('staff/home/', staff_views.home, name='staff-home'),

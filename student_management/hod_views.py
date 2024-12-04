@@ -26,7 +26,7 @@ def add_student(request):
         course_id = request.POST.get('course_id')
         session_id = request.POST.get('session_id')
 
-        if studentUser.objects.filter(email=email).exists():
+        if CustomUser.objects.filter(email=email).exists():
             messages.warning(request, "Email already exists!")
             return redirect('add_student')
 
@@ -34,7 +34,7 @@ def add_student(request):
             messages.error(request, "Password did not match!")
             return redirect('add_student')
 
-        user = studentUser(
+        user = CustomUser(
             first_name=first_name,
             last_name=last_name,
             date_of_birth=date_of_birth,
@@ -59,7 +59,7 @@ def add_student(request):
 
         student.save()
         messages.success(request, "Student has been saved!")
-        return redirect('add_student')
+        return redirect('student_list')
 
     context = {
         'courses' : courses,
@@ -90,6 +90,7 @@ def update_student(request, id):
     student_user = student.user
 
     if request.method == 'POST':
+
         # Update the studentUser fields
         student_user.first_name = request.POST.get('first_name', student_user.first_name)
         student_user.last_name = request.POST.get('last_name', student_user.last_name)
@@ -99,15 +100,16 @@ def update_student(request, id):
             student_user.date_of_birth = parsed_date
         student_user.email = request.POST.get('email', student_user.email)
         student_user.mobile = request.POST.get('mobile', student_user.mobile)
-
-        student_user.photo = request.FILe
-
         student_user.address = request.POST.get('address', student_user.address)
+
         student_user.save()
 
         # Update the Student fields
+        student.gender = request.POST.get('gender', student.gender)
         course_id = request.POST.get('course_id')
         session_id = request.POST.get('session_id')
+        print(course_id)
+        print(session_id)
         try:
             if course_id:
                 student.course = Course.objects.get(id=course_id)
@@ -117,7 +119,7 @@ def update_student(request, id):
             messages.error(request, "Selected course does not exist.")
         except Session.DoesNotExist:
             messages.error(request, "Selected session does not exist.")
-        student.gender = request.POST.get('gender', student.gender)
+
         student.save()
 
         messages.success(request, "Student has been updated!")
@@ -134,3 +136,11 @@ def update_student(request, id):
         'sessions': sessions,
     }
     return render(request, 'hod/update-student.html', context)
+
+
+def delete_student(request, id):
+    student = Student.objects.get(id=id)
+    student.delete()
+    student.user.delete()
+    messages.warning(request, "Student has been successfully deleted!")
+    return redirect('student_list')
