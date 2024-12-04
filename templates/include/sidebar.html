@@ -14,8 +14,8 @@
                  <li class="submenu">
                     <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                     <ul>
-                       <li><a href="{% url 'add_student' %}">Add Student </a></li>
-                       <li><a href="{% url 'student_list' %}">View Student </a></li>
+                       <li><a href="{% url 'add_student' %}">Student Add</a></li>
+                       <li><a href="{% url 'student_list' %}">Student List</a></li>
                     </ul>
                  </li>
                  <li class="submenu">
@@ -29,9 +29,8 @@
                  <li class="submenu">
                     <a href="#"><i class="fa fa-graduation-cap"></i> <span>Courses</span> <span class="menu-arrow"></span></a>
                     <ul>
-                       <li><a href="departments.html">Course View</a></li>
-                       <li><a href="add-department.html">Course Add</a></li>
-                       <li><a href="edit-department.html">Course Edit</a></li>
+                       <li><a href="{% url 'add_course' %}">Course Add</a></li>
+                       <li><a href="{% url 'course_list' %}">Course List</a></li>
                     </ul>
                  </li>
                  <li class="submenu">

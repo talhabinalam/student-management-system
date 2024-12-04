@@ -5,8 +5,10 @@ from django.contrib import messages
 from app.models import *
 
 
+
 def home(request):
     return render(request, 'hod/home.html')
+
 
 
 def add_student(request):
@@ -68,6 +70,7 @@ def add_student(request):
     return render(request, 'hod/add-student.html', context)
 
 
+
 def student_list(request):
     students = Student.objects.all()
 
@@ -75,6 +78,7 @@ def student_list(request):
         'students':students,
     }
     return render(request, 'hod/student-list.html', context)
+
 
 
 def student_details(request, id):
@@ -85,12 +89,12 @@ def student_details(request, id):
     return render(request, 'hod/student-details.html', context)
 
 
+
 def update_student(request, id):
     student = get_object_or_404(Student, id=id)
     student_user = student.user
 
     if request.method == 'POST':
-
         # Update the studentUser fields
         student_user.first_name = request.POST.get('first_name', student_user.first_name)
         student_user.last_name = request.POST.get('last_name', student_user.last_name)
@@ -101,27 +105,15 @@ def update_student(request, id):
         student_user.email = request.POST.get('email', student_user.email)
         student_user.mobile = request.POST.get('mobile', student_user.mobile)
         student_user.address = request.POST.get('address', student_user.address)
-
         student_user.save()
 
         # Update the Student fields
         student.gender = request.POST.get('gender', student.gender)
         course_id = request.POST.get('course_id')
         session_id = request.POST.get('session_id')
-        print(course_id)
-        print(session_id)
-        try:
-            if course_id:
-                student.course = Course.objects.get(id=course_id)
-            if session_id:
-                student.session = Session.objects.get(id=session_id)
-        except Course.DoesNotExist:
-            messages.error(request, "Selected course does not exist.")
-        except Session.DoesNotExist:
-            messages.error(request, "Selected session does not exist.")
-
+        student.course = Course.objects.get(id=course_id)
+        student.session = Session.objects.get(id=session_id)
         student.save()
-
         messages.success(request, "Student has been updated!")
         return redirect('student_list')
 
@@ -138,9 +130,57 @@ def update_student(request, id):
     return render(request, 'hod/update-student.html', context)
 
 
+
 def delete_student(request, id):
     student = Student.objects.get(id=id)
     student.delete()
     student.user.delete()
     messages.warning(request, "Student has been successfully deleted!")
     return redirect('student_list')
+
+
+
+def add_course(request):
+    if request.method == 'POST':
+        course = request.POST.get('course')
+        course = Course(
+            name=course
+        )
+        course.save()
+        messages.success(request, "Course has been added!")
+        return redirect('course_list')
+    return render(request, 'hod/add-course.html')
+
+
+
+def course_list(request):
+    courses = Course.objects.all()
+    return render(request, 'hod/course-list.html', {'courses':courses})
+
+
+
+def update_course(request, id):
+    course = Course.objects.get(id=id)
+    if request.method == 'POST':
+        course.name = request.POST.get('name', course.name)
+        course.save()
+        messages.success(request, "Course has been updated!")
+        return redirect('course_list')
+    return render(request, 'hod/update-course.html', {'course':course})
+
+
+
+def delete_course(request, id):
+    course = Course.objects.get(id=id)
+
+    # Check if there are students associated with this course
+    if Student.objects.filter(course=course).exists():
+        messages.error(request, "Cannot delete course. Students are assigned to this course.")
+        return redirect('course_list')
+
+    course.delete()
+    messages.success(request, "Course deleted successfully!")
+    return redirect('course_list')
+
+
+

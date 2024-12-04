@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-	<title>Preskool - Student List</title> 
+	<title>Preskool - Course List</title> 
 {% endblock %}
 {% block content %}
 <div class="page-wrapper">
@@ -9,14 +9,14 @@
       <div class="page-header">
           <div class="row align-items-center">
             <div class="col">
-               <h3 class="page-title">Students</h3>
+               <h3 class="page-title">Courses</h3>
                <ul class="breadcrumb">
                   <li class="breadcrumb-item"><a href="{% url 'login' %}">Dashboard</a></li>
-                  <li class="breadcrumb-item active">Students List</li>
+                  <li class="breadcrumb-item active">Course List</li>
                </ul>
             </div>
             <div class="col-auto text-right float-right ml-auto">
-               <a href="{% url 'add_student' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+               <a href="{% url 'add_course' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
             </div>
          </div>
       </div>
@@ -31,43 +31,26 @@
                      <table class="table table-hover table-center mb-0 datatable">
                         <thead>
                            <tr>
-                              <th>ID</th>
-                              <th>Name</th>
-                              <th>Course</th>
-                              <th>Session</th>
-                              <th>Mobile</th>
-                              <th>Address</th>
+                              <th>Course Name</th>
+                              <th>Created at</th>
+                              <th>Updated at</th>
                               <th class="text-right">Action</th>
                            </tr>
                         </thead>
                         <tbody>
-                           {% for student in students %}
+                           {% for course in courses %}
                            <tr>
-                              <td>{{ student.id }}</td>
-                              <td>
-                                 <h2 class="table-avatar">
-                                    <a href="{% url 'student_details' student.id %}" class="avatar avatar-sm mr-2">
-                                    {% if student.user.photo %}
-                                    <img class="avatar-img rounded-circle" src="{{ student.user.photo.url }}" alt="User Image" style="width: 35px; height: 35px; object-fit: cover;">
-                                    {% else %}
-                                    <img class="avatar-img rounded-circle" src="{% static 'assets/img/profiles/avatar-01.jpg' %}" alt="User Image" style="width: 35px; height: 35px; object-fit: cover;">
-                                    {% endif %}
-                                    </a>
-                                    <a href="{% url 'student_details' student.id %}">{{ student.user.first_name }} {{ student.user.last_name }}</a>
-                                 </h2>
-                              </td>
-                              <td>{{ student.course }}</td>
-                              <td>{{ student.session }}</td>
-                              <td>{{ student.user.mobile }}</td>
-                              <td>{{ student.user.address }}</td>
+                              <td>{{ course.name }}</td>
+                              <td>{{ course.created_at }}</td>
+                              <td>{{ course.updated_at }}</td>
                               <td class="text-right">
                                  <div class="actions">
-                                    <a href="{% url 'update_student' student.id %}" class="btn btn-sm bg-success-light mr-2">
+                                    <a href="{% url 'update_course' course.id %}" class="btn btn-sm bg-success-light mr-2">
                                     <i class="fas fa-pen"></i>
                                     </a>
-                                    <a href="{% url 'delete_student' student.id %}" 
+                                    <a href="{% url 'delete_course' course.id %}" 
                                        class="btn btn-sm bg-danger-light" 
-                                       onclick="openModal(event, '{{ student.user.first_name }} {{ student.user.last_name }}')">
+                                       onclick="openModal(event, '{{ course.name }}')">
                                     <i class="fas fa-trash"></i>
                                     </a>
                                      
@@ -79,7 +62,7 @@
                                                 <h5 class="modal-title" id="deleteModalLabel" style="text-align: center; width: 100%;">Confirm Deletion</h5>
                                              </div>
                                              <div class="modal-body d-flex justify-content-center align-items-center" style="flex-direction: column; text-align: center;">
-                                                <p>Are you sure you want to delete <strong id="studentName"></strong>?</p>
+                                                <p>Are you sure you want to delete <strong id="courseName"></strong>?</p>
                                              </div>
                                              <div class="modal-footer justify-content-center">
                                                 <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
@@ -108,7 +91,7 @@
      event.preventDefault();
    
      // Set student name in the modal
-     document.getElementById('studentName').textContent = name;
+     document.getElementById('courseName').textContent = name;
    
      // Show the modal
      var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));

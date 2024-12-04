@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}
+	<title>Preskool - Student Details</title> 
+{% endblock %}
 {% block content %}
 <div class="page-wrapper">
     <div class="content container-fluid">
@@ -8,7 +11,7 @@
                 <div class="col-sm-12">
                     <h3 class="page-title">Student Details</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="students.html">Student</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'student_list' %}">Student</a></li>
                         <li class="breadcrumb-item active">Student Details</li>
                     </ul>
                 </div>
@@ -20,7 +23,6 @@
                     <div class="col-md-12">
                         <div class="about-info text-center">
                             <!-- Image Display -->
-                            
                             <div class="mb-3">
                                 {% if student.user.photo %}
                                 <img src="{{ student.user.photo.url }}" class="rounded-circle" alt="User Image" 
@@ -68,9 +70,16 @@
                                         <span class="title-span font-weight-bold">Address : </span>
                                         <span class="info-span">{{ student.user.address }}</span>
                                     </li>
+                                    <li class="mb-2">
+                                        <span class="title-span font-weight-bold">Created at : </span>
+                                        <span class="info-span">{{ student.created_at }}</span>
+                                    </li>
+                                    <li class="mb-2">
+                                        <span class="title-span font-weight-bold">Updated at : </span>
+                                        <span class="info-span">{{ student.updated_at }}</span>
+                                    </li>
                                 </ul>
                             </div>
-
                         </div>
                     </div>
                 </div>
