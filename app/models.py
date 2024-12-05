@@ -39,7 +39,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     date_of_birth = models.DateField(null=True, blank=True)
     mobile = models.CharField(max_length=15, null=True, blank=True)
-    address = models.CharField(max_length=150, null=True, blank=True)
+    address = models.CharField(max_length=250, null=True, blank=True)
     user_type = models.CharField(max_length=30, choices=CHOICES)
     photo = models.ImageField(upload_to='media/profile_pic', null=True, blank=True)
 
@@ -69,14 +69,14 @@ class Session(models.Model):
         return f"{self.session_start} - {self.session_end}"
 
 
-CHOICES= (
+GENDER_CHOICES= (
     ('Male', 'Male'),
     ('Female', 'Female'),
 )
 
 class Student(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    gender = models.CharField(max_length=50, choices=CHOICES)
+    gender = models.CharField(max_length=50, choices=GENDER_CHOICES)
     course = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
     session = models.ForeignKey(Session, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -84,3 +84,15 @@ class Student(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
+
+
+class Staff(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    gender = models.CharField(max_length=50, choices=GENDER_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user.first_name + " " + self.user.last_name
+
+

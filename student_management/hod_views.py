@@ -5,10 +5,8 @@ from django.contrib import messages
 from app.models import *
 
 
-
 def home(request):
     return render(request, 'hod/home.html')
-
 
 
 def add_student(request):
@@ -135,7 +133,7 @@ def delete_student(request, id):
     student = Student.objects.get(id=id)
     student.delete()
     student.user.delete()
-    messages.warning(request, "Student has been successfully deleted!")
+    messages.success(request, "Student has been successfully deleted!")
     return redirect('student_list')
 
 
@@ -181,6 +179,101 @@ def delete_course(request, id):
     course.delete()
     messages.success(request, "Course deleted successfully!")
     return redirect('course_list')
+
+
+
+def add_staff(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        date_of_birth = request.POST.get('date_of_birth')
+        email = request.POST.get('email')
+        mobile = request.POST.get('mobile')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+        address = request.POST.get('address')
+        gender = request.POST.get('gender')
+
+        if CustomUser.objects.filter(email=email).exists():
+            messages.warning(request, "Email already exists!")
+            return redirect('add_staff')
+
+        if password != confirm_password:
+            messages.error(request, "Password did not match!")
+            return redirect('add_staff')
+
+        user = CustomUser(
+            first_name=first_name,
+            last_name=last_name,
+            date_of_birth=date_of_birth,
+            email=email,
+            mobile=mobile,
+            address=address,
+            user_type="STAFF",
+        )
+        user.set_password(password)
+        print(user)
+        user.save()
+
+        staff = Staff(
+            user=user,
+            gender=gender,
+        )
+        staff.save()
+        print(staff)
+        messages.success(request, "Staff has been added!")
+        return redirect('add_staff')
+
+    return render(request, 'hod/add-staff.html')
+
+
+
+def staff_list(request):
+    staffs = Staff.objects.all()
+    return render(request, 'hod/staff-list.html', {'staffs':staffs})
+
+
+
+def staff_details(request, id):
+    staff = Staff.objects.get(id=id)
+    return render(request, 'hod/staff-details.html', {'staff':staff})
+
+
+
+def update_staff(request, id):
+    staff = Staff.objects.get(id=id)
+    user = staff.user
+
+    if request.method == 'POST':
+        user.first_name = request.POST.get('first_name', user.first_name)
+        user.last_name = request.POST.get('last_name', user.last_name)
+        user.date_of_birth = request.POST.get('date_of_birth', user.date_of_birth)
+        user.email = request.POST.get('email', user.email)
+        user.mobile = request.POST.get('mobile', user.mobile)
+        user.address = request.POST.get('address', user.address)
+        user.save()
+
+        staff.gender = request.POST.get('gender', staff.gender)
+        staff.save()
+        messages.success(request, "Staff has been updated!")
+        return redirect('staff_list')
+
+    context = {
+        'staff':staff,
+        'user': user,
+    }
+
+    return render(request, 'hod/update-staff.html', context)
+
+
+def delete_staff(request, id):
+    staff = Staff.objects.get(id=id)
+    staff.delete()
+    staff.user.delete()
+    messages.success(request, "Staff has been deleted!")
+    return redirect('staff_list')
+
+
 
 
 

@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -23,6 +22,11 @@ urlpatterns = [
     path('hod/course/list/', hod_views.course_list, name='course_list'),
     path('hod/course/delete/<int:id>/', hod_views.delete_course, name='delete_course'),
     path('hod/course/update/<int:id>/', hod_views.update_course, name='update_course'),
+    path('hod/staff/add/', hod_views.add_staff, name='add_staff'),
+    path('hod/staff/list/', hod_views.staff_list, name='staff_list'),
+    path('hod/staff/details/<int:id>/', hod_views.staff_details, name='staff_details'),
+    path('hod/staff/update/<int:id>/', hod_views.update_staff, name='update_staff'),
+    path('hod/staff/delete/<int:id>/', hod_views.delete_staff, name='delete_staff'),
 
     # staff
     # path('staff/home/', staff_views.home, name='staff-home'),

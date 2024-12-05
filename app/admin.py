@@ -37,8 +37,14 @@ class StudentAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at', 'updated_at')
 
 
+class StaffAdmin(admin.ModelAdmin):
+    list_display = ('user', 'gender', 'created_at', 'updated_at',)
+    readonly_fields = ('created_at', 'updated_at',)
+
+
 # Register the customized admin class
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Session)
 admin.site.register(Student, StudentAdmin)
+admin.site.register(Staff, StaffAdmin)
