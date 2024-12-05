@@ -27,6 +27,10 @@ urlpatterns = [
     path('hod/staff/details/<int:id>/', hod_views.staff_details, name='staff_details'),
     path('hod/staff/update/<int:id>/', hod_views.update_staff, name='update_staff'),
     path('hod/staff/delete/<int:id>/', hod_views.delete_staff, name='delete_staff'),
+    path('hod/subject/add/', hod_views.add_subject, name='add_subject'),
+    path('hod/subject/list/', hod_views.subject_list, name='subject_list'),
+    path('hod/subject/update/<int:id>/', hod_views.update_subject, name='update_subject'),
+    path('hod/subject/delete/<int:id>/', hod_views.delete_subject, name='delete_subject'),
 
     # staff
     # path('staff/home/', staff_views.home, name='staff-home'),

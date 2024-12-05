@@ -141,6 +141,11 @@ def delete_student(request, id):
 def add_course(request):
     if request.method == 'POST':
         course = request.POST.get('course')
+
+        if Course.objects.filter(name__iexact=course).exists():
+            messages.warning(request, "Course already exists!")
+            return redirect('add_course')
+
         course = Course(
             name=course
         )
@@ -222,7 +227,7 @@ def add_staff(request):
         staff.save()
         print(staff)
         messages.success(request, "Staff has been added!")
-        return redirect('add_staff')
+        return redirect('staff_list')
 
     return render(request, 'hod/add-staff.html')
 
@@ -266,6 +271,7 @@ def update_staff(request, id):
     return render(request, 'hod/update-staff.html', context)
 
 
+
 def delete_staff(request, id):
     staff = Staff.objects.get(id=id)
     staff.delete()
@@ -275,5 +281,76 @@ def delete_staff(request, id):
 
 
 
+def add_subject(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        course_id = request.POST.get('course_id')
+        staff_id = request.POST.get('staff_id')
 
+        print(course_id)
+        print(staff_id)
+
+        course = Course.objects.get(id=course_id)
+        staff = Staff.objects.get(id=staff_id)
+
+        print(course)
+        print(staff)
+
+        subject = Subject(
+            name=name,
+            course=course,
+            staff=staff,
+        )
+        subject.save()
+        messages.success(request, "Subject has been added!")
+        return redirect('subject_list')
+
+    courses = Course.objects.all()
+    staffs = Staff.objects.all()
+
+    context = {
+        'courses':courses,
+        'staffs':staffs,
+    }
+
+    return render(request, 'hod/add-subject.html', context)
+
+
+def subject_list(request):
+    subjects = Subject.objects.all()
+    return render(request, 'hod/subject-list.html', {'subjects':subjects})
+
+
+def update_subject(request, id):
+    subject = Subject.objects.get(id=id)
+    courses = Course.objects.all()
+    staffs = Staff.objects.all()
+
+    if request.method == 'POST':
+        subject.name = request.POST.get('name', subject.name)
+        course_id = request.POST.get('course_id', subject.course)
+        staff_id = request.POST.get('staff_id', subject.staff)
+
+        subject.course = Course.objects.get(id=course_id)
+        subject.staff = Staff.objects.get(id=staff_id)
+
+        subject.save()
+        messages.success(request, "Subject has been updated!")
+        return redirect('subject_list')
+
+    context = {
+        'subject':subject,
+        'courses':courses,
+        'staffs':staffs,
+
+    }
+
+    return render(request, 'hod/update_subject.html', context)
+
+
+def delete_subject(request, id):
+    subject = Subject.objects.get(id=id)
+    subject.delete()
+    messages.success(request, "Subject has been deleted!")
+    return redirect('subject_list')
 

@@ -24,6 +24,9 @@
                         <div class="card-body">
                         
                        <form action="{% url 'update_course' course.id %}" method="POST">
+                           <div class="col-12">
+                             <h5 class="form-title"><span>Course Information</span></h5>
+                           </div>
                         {% csrf_token %}
                         <div class="col-sm-12">
                             <div class="form-group">

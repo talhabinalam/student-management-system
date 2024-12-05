@@ -12,7 +12,7 @@
                 <div class="col">
                    <h3 class="page-title">Add Course</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{% url 'course_list' %}">Courses</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'course_list' %}">Course</a></li>
                         <li class="breadcrumb-item active">Add Course</li>
                     </ul>
                 </div>
@@ -23,6 +23,9 @@
                 <div class="card">
                    <div class="card-body">
                       <form action="{% url 'add_course' %}" method="POST">
+                          <div class="col-12">
+                             <h5 class="form-title"><span>Course Information</span></h5>
+                           </div>
                          {% csrf_token %}
                          <div class="col-sm-12">
                             <div class="form-group">

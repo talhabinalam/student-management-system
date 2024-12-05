@@ -28,7 +28,7 @@
             <div class="card card-table">
                <div class="card-body">
                   <div class="table-responsive">
-                     <table class="table table-hover table-center mb-0 datatable">
+                     <table id="table_id" class="table table-hover table-center mb-0">
                         <thead>
                            <tr>
                               <th>Course Name</th>
@@ -40,7 +40,7 @@
                         <tbody>
                            {% for course in courses %}
                            <tr>
-                              <td>{{ course.name }}</td>
+                              <td>{{ course.name|upper }}</td>
                               <td>{{ course.created_at }}</td>
                               <td>{{ course.updated_at }}</td>
                               <td class="text-right">
