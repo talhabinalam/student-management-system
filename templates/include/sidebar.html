@@ -42,9 +42,8 @@
                   <li class="submenu">
                     <a href="#"><i class="fas fa-calendar"></i> <span>Sessions</span> <span class="menu-arrow"></span></a>
                     <ul>
-                       <li><a href="subjects.html">Session View</a></li>
-                       <li><a href="add-subject.html">Session Add</a></li>
-                       <li><a href="edit-subject.html">Session Edit</a></li>
+                       <li><a href="{% url 'add_session' %}">Session Add</a></li>
+                       <li><a href="{% url 'session_list' %}">Session List</a></li>
                     </ul>
                  </li>
                  <li>

@@ -31,6 +31,10 @@ urlpatterns = [
     path('hod/subject/list/', hod_views.subject_list, name='subject_list'),
     path('hod/subject/update/<int:id>/', hod_views.update_subject, name='update_subject'),
     path('hod/subject/delete/<int:id>/', hod_views.delete_subject, name='delete_subject'),
+    path('hod/session/add/', hod_views.add_session, name='add_session'),
+    path('hod/session/list/', hod_views.session_list, name='session_list'),
+    path('hod/session/update/<int:id>/', hod_views.update_session, name='update_session'),
+    path('hod/session/delete/<int:id>/', hod_views.delete_session, name='delete_session'),
 
     # staff
     # path('staff/home/', staff_views.home, name='staff-home'),

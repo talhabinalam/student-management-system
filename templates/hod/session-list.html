@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	<title>Preskool - Session List</title> 
+{% endblock %}
+{% block content %}
+<div class="page-wrapper">
+   <div class="content container-fluid">
+      <div class="page-header">
+          <div class="row align-items-center">
+            <div class="col">
+               <h3 class="page-title">Session List</h3>
+               <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'login' %}">Dashboard</a></li>
+                  <li class="breadcrumb-item active">Session List</li>
+               </ul>
+            </div>
+            <div class="col-auto text-right float-right ml-auto">
+               <a href="{% url 'add_session' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+            </div>
+         </div>
+      </div>
+   
+   {% include 'include/alert.html' %}
+   
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="card card-table">
+               <div class="card-body">
+                  <div class="table-responsive">
+                     <table id="table_id" class="table table-hover table-center mb-0">
+                        <thead>
+                           <tr>
+                              <th>ID</th>
+                             <th>Session Starts</th>
+                              <th>Session Ends</th>
+                              <th class="text-right">Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {% for session  in sessions %}
+                           <tr>
+                              <td>{{ session.id }}</td>
+                              <td>{{ session.session_start }}</td>
+                              <td>{{ session.session_end }}</td>
+                              <td class="text-right">
+                                 <div class="actions">
+                                    <a href="{% url 'update_session' session.id %}" class="btn btn-sm bg-success-light mr-2">
+                                    <i class="fas fa-pen"></i>
+                                    </a>
+                                    <a href="{% url 'delete_session' session.id %}" 
+                                       class="btn btn-sm bg-danger-light" 
+                                       onclick="openModal(event, 'Session {{ session }}')">
+                                    <i class="fas fa-trash"></i>
+                                    </a>
+                                     
+                                    <!-- Bootstrap Modal -->
+                                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                       <div class="modal-dialog" style="min-height: 70vh;">
+                                          <div class="modal-content">
+                                             <div class="modal-header justify-content-center">
+                                                <h5 class="modal-title" id="deleteModalLabel" style="text-align: center; width: 100%;">Confirm Deletion</h5>
+                                             </div>
+                                             <div class="modal-body d-flex justify-content-center align-items-center" style="flex-direction: column; text-align: center;">
+                                                <p>Are you sure you want to delete <strong id="sessionName"></strong>?</p>
+                                             </div>
+                                             <div class="modal-footer justify-content-center">
+                                                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                                                 <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </td>
+                           </tr>
+                           {% endfor %}
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+    
+<script>
+   function openModal(event, name) {
+     // Prevent default action of the link
+     event.preventDefault();
+   
+     // Set student name in the modal
+     document.getElementById('sessionName').textContent = name;
+   
+     // Show the modal
+     var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+     deleteModal.show();
+   
+     // Set the delete button action
+     document.getElementById('confirmDeleteBtn').onclick = function() {
+         // Redirect to the delete URL
+         window.location.href = event.target.closest('a').href;
+     };
+   
+     // Manually close the modal when Cancel is clicked
+     document.getElementById('cancelBtn').onclick = function() {
+         deleteModal.hide();
+     };
+   }
+</script>
+    
+{% endblock %}

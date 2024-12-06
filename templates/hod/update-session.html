@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}
+	<title>Preskool - Update Session</title> 
+{% endblock %}
+{% block content %}
+	
+    <div class="page-wrapper">
+            <div class="content container-fluid">
+               <div class="page-header">
+                  <div class="row align-items-center">
+                     <div class="col">
+                        <h3 class="page-title">Update Session</h3>
+                       <ul class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="{% url 'student_list' %}">Session</a></li>
+                          <li class="breadcrumb-item active">Update</li>
+                       </ul>
+                     </div>
+                  </div>
+               </div>
+            
+               {% include 'include/alert.html' %}
+                
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="card">
+                        <div class="card-body">
+                       <form action="{% url 'update_session' session.id %}" method="POST">
+                           <div class="col-12">
+                             <h5 class="form-title"><span>Session Information</span></h5>
+                           </div>
+                        {% csrf_token %}
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Session Starts</label>
+                                <input type="text" class="form-control" name="first_name" value="{{ session.session_start }}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Session Ends</label>
+                                <input type="text" class="form-control" name="last_name" value="{{ session.session_end }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                        </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+    
+{% endblock %}

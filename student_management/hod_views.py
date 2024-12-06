@@ -354,3 +354,51 @@ def delete_subject(request, id):
     messages.success(request, "Subject has been deleted!")
     return redirect('subject_list')
 
+
+def add_session(request):
+    if request.method == 'POST':
+        session_start = request.POST.get('session_start')
+        session_end = request.POST.get('session_end')
+
+        if Session.objects.filter(session_start=session_start).exists():
+            messages.error(request, "Session already exists!")
+            return redirect('add_session')
+
+        session = Session(
+            session_start=session_start,
+            session_end=session_end,
+        )
+        session.save()
+        messages.success(request, "Session has been added!")
+        return redirect('session_list')
+
+    return render(request, 'hod/add-session.html')
+
+
+def session_list(request):
+    sessions = Session.objects.all()
+    return render(request, 'hod/session-list.html', {'sessions':sessions})
+
+
+def update_session(request, id):
+    session = Session.objects.get(id=id)
+    if request.method == 'POST':
+        session.session_start = request.POST.get('session_start', session.session_start)
+        session.session_end = request.POST.get('session_end', session.session_end)
+
+        session.save()
+        messages.success(request, "Session updated!")
+        return redirect('session_list')
+
+    return render(request, 'hod/update-session.html', {'session':session})
+
+
+def delete_session(request, id):
+    session = Session.objects.get(id=id)
+
+    if Student.objects.filter(session=session).exists():
+        messages.warning(request, "This session contains students!")
+        return redirect('session_list')
+    session.delete()
+    messages.success(request, "Session deleted!")
+    return redirect('session_list')
