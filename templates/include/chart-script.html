@@ -1,0 +1,194 @@
+<script>
+
+$(document).ready(function() {
+
+	// Area chart
+	
+	var options = {
+          series: [{{ students }}, {{ staffs }}, {{ courses }}, {{ subjects }}],
+          chart: {
+          height: 360,
+          type: 'pie',
+        },
+        labels: ['Student', 'Staff', 'Course', 'Subject'],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#all_data"), options);
+        chart.render();
+    
+    
+    if ($('#gender').length > 0) {
+        var optionsBar = {
+            chart: {
+                type: 'bar',
+                height: 350,
+                width: '100%',
+                toolbar: {
+                    show: false
+                },
+                background: '#f4f4f4'
+            },
+            dataLabels: {
+                enabled: false
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '30%',
+                    barHeight: '70%',
+                    distributed: true // Different colors for each bar
+                }
+            },
+            series: [
+                {
+                    name: "Students", // General name for the series
+                    data: [{{ males|safe }}, {{ females|safe }}] // Boys and girls counts as separate bars
+                }
+            ],
+            xaxis: {
+                categories: ['Boys', 'Girls'], // Replace "Group 1" with "Boys" and "Girls"
+                labels: {
+                    style: {
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        colors: ['#333']
+                    }
+                },
+                title: {
+                    text: '',
+                    style: {
+                        fontSize: '14px',
+                        fontWeight: 700,
+                        color: '#333'
+                    }
+                }
+            },
+            yaxis: {
+                labels: {
+                    style: {
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        colors: '#777'
+                    }
+                },
+                title: {
+                    text: 'Count',
+                    style: {
+                        fontSize: '14px',
+                        fontWeight: 700,
+                        color: '#333'
+                    }
+                }
+            },
+            legend: {
+                show: false // Removes the legend from the top
+            },
+            grid: {
+                borderColor: '#e7e7e7',
+                strokeDashArray: 4
+            },
+            tooltip: {
+                enabled: true,
+                theme: 'light',
+                y: {
+                    formatter: function (val) {
+                        return val + " Students";
+                    }
+                }
+            },
+            title: {
+                text: 'Gender Distribution',
+                align: 'center',
+                style: {
+                    fontSize: '18px',
+                    fontWeight: 700,
+                    color: '#333'
+                }
+            },
+            colors: ['#4CAF50', '#FFC107'] // Green for Boys, Yellow for Girls
+        };
+    
+        var chartBar = new ApexCharts(document.querySelector('#gender'), optionsBar);
+        chartBar.render();
+        
+        
+    var options = {
+      series: [{{ students }}, {{ staffs }}],
+      chart: {
+      height: 350,
+      type: 'donut',
+    },
+    labels: ['Student', 'Staff'],
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 150
+        },
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }]
+    };
+
+    var chart = new ApexCharts(document.querySelector("#stu_staff"), options);
+    chart.render();
+    
+    
+    var options = {
+          series: [{{ courses }}, {{ subjects }}],
+          chart: {
+          height: 350,
+          type: 'donut',
+        },
+        plotOptions: {
+          pie: {
+            startAngle: -90,
+            endAngle: 270
+          }
+        },
+        dataLabels: {
+          enabled: true
+        },
+        fill: {
+          type: 'gradient',
+        },
+        legend: {
+          formatter: function(val, opts) {
+            return val + " - " + opts.w.globals.series[opts.seriesIndex]
+          }
+        },
+        labels: ['Course', 'Subject'],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#co_sub"), options);
+        chart.render();
+        
+    }
+    
+});
+    
+</script>

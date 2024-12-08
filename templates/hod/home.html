@@ -31,7 +31,7 @@
                                  <i class="fas fa-user-graduate"></i>
                               </div>
                               <div class="db-info">
-                                 <h3>50055</h3>
+                                 <h3>{{ students }}</h3>
                                  <h6>Students</h6>
                               </div>
                            </div>
@@ -43,11 +43,11 @@
                         <div class="card-body">
                            <div class="db-widgets d-flex justify-content-between align-items-center">
                               <div class="db-icon">
-                                 <i class="fas fa-crown"></i>
+                                 <i class="fas fa-user-tie"></i>
                               </div>
                               <div class="db-info">
-                                 <h3>50+</h3>
-                                 <h6>Awards</h6>
+                                 <h3>{{ staffs }}</h3>
+                                 <h6>Staffs</h6>
                               </div>
                            </div>
                         </div>
@@ -58,11 +58,11 @@
                         <div class="card-body">
                            <div class="db-widgets d-flex justify-content-between align-items-center">
                               <div class="db-icon">
-                                 <i class="fas fa-building"></i>
+                                 <i class="fas fa-book"></i>
                               </div>
                               <div class="db-info">
-                                 <h3>30+</h3>
-                                 <h6>Department</h6>
+                                 <h3>{{ courses }}</h3>
+                                 <h6>Courses</h6>
                               </div>
                            </div>
                         </div>
@@ -73,11 +73,11 @@
                         <div class="card-body">
                            <div class="db-widgets d-flex justify-content-between align-items-center">
                               <div class="db-icon">
-                                 <i class="fas fa-file-invoice-dollar"></i>
+                                 <i class="fas fa-book-open"></i>
                               </div>
                               <div class="db-info">
-                                 <h3>$505</h3>
-                                 <h6>Revenue</h6>
+                                 <h3>{{ subjects }}</h3>
+                                 <h6>Subjects</h6>
                               </div>
                            </div>
                         </div>
@@ -85,60 +85,67 @@
                   </div>
                </div>
                <div class="row">
+                   
                   <div class="col-md-12 col-lg-6">
                      <div class="card card-chart">
                         <div class="card-header">
                            <div class="row align-items-center">
                               <div class="col-6">
-                                 <h5 class="card-title">Revenue</h5>
-                              </div>
-                              <div class="col-6">
-                                 <ul class="list-inline-group text-right mb-0 pl-0">
-                                    <li class="list-inline-item">
-                                       <div class="form-group mb-0 amount-spent-select">
-                                          <select class="form-control form-control-sm">
-                                             <option>Today</option>
-                                             <option>Last Week</option>
-                                             <option>Last Month</option>
-                                          </select>
-                                       </div>
-                                    </li>
-                                 </ul>
+                                 <h5 class="card-title">Information</h5>
                               </div>
                            </div>
                         </div>
                         <div class="card-body">
-                           <div id="apexcharts-area"></div>
+                           <div id="all_data"></div>
                         </div>
                      </div>
                   </div>
+                   
                   <div class="col-md-12 col-lg-6">
                      <div class="card card-chart">
                         <div class="card-header">
                            <div class="row align-items-center">
                               <div class="col-6">
-                                 <h5 class="card-title">Number of Students</h5>
-                              </div>
-                              <div class="col-6">
-                                 <ul class="list-inline-group text-right mb-0 pl-0">
-                                    <li class="list-inline-item">
-                                       <div class="form-group mb-0 amount-spent-select">
-                                          <select class="form-control form-control-sm">
-                                             <option>Today</option>
-                                             <option>Last Week</option>
-                                             <option>Last Month</option>
-                                          </select>
-                                       </div>
-                                    </li>
-                                 </ul>
+                                 <h5 class="card-title">Gender</h5>
                               </div>
                            </div>
                         </div>
                         <div class="card-body">
-                           <div id="bar"></div>
+                           <div id="gender"></div>
                         </div>
                      </div>
                   </div>
+                                      
+                  <div class="col-md-12 col-lg-6">
+                     <div class="card card-chart">
+                        <div class="card-header">
+                           <div class="row align-items-center">
+                              <div class="col-6">
+                                 <h5 class="card-title">Student and Staff</h5>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card-body">
+                           <div id="stu_staff"></div>
+                        </div>
+                     </div>
+                  </div>
+                   
+                  <div class="col-md-12 col-lg-6">
+                     <div class="card card-chart">
+                        <div class="card-header">
+                           <div class="row align-items-center">
+                              <div class="col-6">
+                                 <h5 class="card-title">Course and Subject</h5>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card-body">
+                           <div id="co_sub"></div>
+                        </div>
+                     </div>
+                  </div>
+                   
                </div>
                <div class="row">
                   <div class="col-md-6 d-flex">
@@ -285,4 +292,6 @@
             </div>
         </div>
         <!--Dashboard Layout ends-->
+    
+{% include 'include/chart-script.html' %}
 {% endblock %}

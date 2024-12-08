@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load active_link_tags %}
     <!--Sidebar starts-->
      <div class="sidebar" id="sidebar">
         <div class="sidebar-inner slimscroll">
@@ -8,46 +8,62 @@
                  <li class="menu-title">
                     <span>Main Menu</span>
                  </li>
-                 <li>
+                  {% if user.user_type == 'HOD' %}
+                 <li class="{% active_link 'hod_home' 'active' %}">
                     <a href="{% url 'login' %}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
                 </li>
-                 <li class="submenu">
+                  {% elif user.user_type == 'STAFF' %}
+                <li class="#">
+                    <a href="{% url 'login' %}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+                </li>     
+                  {% else %}
+                <li class="#">
+                    <a href="{% url 'login' %}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+                </li>  
+                  {% endif %}
+                 <li class="submenu {% active_link 'student_list' 'active' %} {% active_link 'add_student' 'active' %}">
                     <a href="#"><i class="fas fa-user-graduate"></i> <span> Students</span> <span class="menu-arrow"></span></a>
                     <ul>
-                       <li><a href="{% url 'add_student' %}">Student Add</a></li>
-                       <li><a href="{% url 'student_list' %}">Student List</a></li>
+                        <li><a href="{% url 'student_list' %}">Student List</a></li>
+                        <li><a href="{% url 'add_student' %}">Student Add</a></li>
                     </ul>
                  </li>
-                 <li class="submenu">
+                 <li class="submenu {% active_link 'staff_list' 'active' %} {% active_link 'add_staff' 'active' %}">
                     <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span>Staff</span> <span class="menu-arrow"></span></a>
                     <ul>
-                       <li><a href="{% url 'add_staff' %}">Staff Add</a></li>
-                       <li><a href="{% url 'staff_list' %}">Staff List</a></li>
+                        <li><a href="{% url 'staff_list' %}">Staff List</a></li>
+                        <li><a href="{% url 'add_staff' %}">Staff Add</a></li>
                     </ul>
                  </li>
-                 <li class="submenu">
+                 <li class="submenu {% active_link 'course_list' 'active' %} {% active_link 'add_course' 'active' %}">
                     <a href="#"><i class="fa fa-graduation-cap"></i> <span>Courses</span> <span class="menu-arrow"></span></a>
                     <ul>
-                       <li><a href="{% url 'add_course' %}">Course Add</a></li>
-                       <li><a href="{% url 'course_list' %}">Course List</a></li>
+                        <li><a href="{% url 'course_list' %}">Course List</a></li>
+                        <li><a href="{% url 'add_course' %}">Course Add</a></li>
                     </ul>
                  </li>
-                 <li class="submenu">
+                 <li class="submenu {% active_link 'subject_list' 'active' %} {% active_link 'add_subject' 'active' %}">
                     <a href="#"><i class="fas fa-book-reader"></i> <span> Subjects</span> <span class="menu-arrow"></span></a>
                     <ul>
-                       <li><a href="{% url 'add_subject' %}">Subject Add</a></li>
-                       <li><a href="{% url 'subject_list' %}">Subject List</a></li>
+                        <li><a href="{% url 'subject_list' %}">Subject List</a></li>
+                        <li><a href="{% url 'add_subject' %}">Subject Add</a></li>
                     </ul>
                  </li>
-                  <li class="submenu">
+                  <li class="submenu {% active_link 'session_list' 'active' %} {% active_link 'add_session' 'active' %}">
                     <a href="#"><i class="fas fa-calendar"></i> <span>Sessions</span> <span class="menu-arrow"></span></a>
                     <ul>
-                       <li><a href="{% url 'add_session' %}">Session Add</a></li>
-                       <li><a href="{% url 'session_list' %}">Session List</a></li>
+                        <li><a href="{% url 'session_list' %}">Session List</a></li>
+                        <li><a href="{% url 'add_session' %}">Session Add</a></li>
                     </ul>
                  </li>
                  <li>
                     <a href="#"><i class="fas fa-calendar-check"></i> <span>View Attendance</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-envelope"></i> <span>Send Staff Notification</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-bell"></i> <span>Send Student Notification</span></a>
                 </li>
                 <li>
                     <a href="#"><i class="fas fa-user-clock"></i> <span>Staff Leave</span></a>

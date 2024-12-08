@@ -6,7 +6,23 @@ from app.models import *
 
 
 def home(request):
-    return render(request, 'hod/home.html')
+    students = Student.objects.all().count()
+    staffs = Staff.objects.all().count()
+    courses = Course.objects.all().count()
+    subjects = Subject.objects.all().count()
+
+    males = Student.objects.filter(gender='Male').count()
+    females = Student.objects.filter(gender='Female').count()
+
+    context = {
+        'students':students,
+        'staffs':staffs,
+        'courses':courses,
+        'subjects':subjects,
+        'males':males,
+        'females':females,
+    }
+    return render(request, 'hod/home.html', context)
 
 
 def add_student(request):
