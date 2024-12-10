@@ -7,12 +7,11 @@ from django.contrib import messages
 def get_redirect_url(user):
     if user.user_type == 'HOD':
         return 'hod_home'
+    elif user.user_type == 'STAFF':
+        return 'staff_home'
     elif user.user_type == 'STUDENT':
         # return 'student_home'
         return HttpResponse("Student home")
-    elif user.user_type == 'TEACHER':
-        # return 'teacher_home'
-        pass
     else:
         return 'login'  # Fallback for undefined user types
 
@@ -28,11 +27,10 @@ def user_login(request):
                 # return redirect(get_redirect_url(request.user))
                 if user.user_type == 'HOD':
                     return redirect('hod_home')
-
+                elif user.user_type == 'STAFF':
+                    return redirect('staff_home')
                 elif user.user_type == 'STUDENT':
                     return HttpResponse("Student home")
-
-
             else:
                 messages.error(request, "Invalid email or password!")
                 return redirect('login')

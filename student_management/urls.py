@@ -35,12 +35,15 @@ urlpatterns = [
     path('hod/session/list/', hod_views.session_list, name='session_list'),
     path('hod/session/update/<int:id>/', hod_views.update_session, name='update_session'),
     path('hod/session/delete/<int:id>/', hod_views.delete_session, name='delete_session'),
+    path('hod/staff/send_notification/', hod_views.send_staff_msg, name='send_staff_notification'),
+    path('hod/staff/save_message/', hod_views.save_staff_msg, name='save_staff_msg'),
 
     # staff
-    # path('staff/home/', staff_views.home, name='staff-home'),
+    path('staff/home/', staff_views.home, name='staff_home'),
+    path('staff/notification/', staff_views.notification, name='notification'),
 
     # student
-    #path('student/home/', student_views.home, name='student-home'),
+    #path('student/home/', student_views.home, name='student_home'),
 
     path('profile/', views.profile, name='profile'),
     path('update_profile/', views.update_profile, name='update_profile'),

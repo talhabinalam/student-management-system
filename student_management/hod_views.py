@@ -418,3 +418,33 @@ def delete_session(request, id):
     session.delete()
     messages.success(request, "Session deleted!")
     return redirect('session_list')
+
+
+def send_staff_msg(request):
+    staffs = Staff.objects.all()
+    notifications = StaffNotification.objects.order_by('-created_at')[:5]
+
+    context = {
+        'staffs':staffs,
+        'notifications':notifications,
+    }
+    return render(request, 'hod/send-staff-notification.html', context)
+
+
+def save_staff_msg(request):
+    if request.method == 'POST':
+        staff_id = request.POST.get('staff_id')
+        message = request.POST.get('message')
+
+        staff = Staff.objects.get(user=staff_id)
+
+        notification = StaffNotification(
+            staff=staff,
+            message=message
+        )
+        notification.save()
+        messages.success(request, "Message has been sent!")
+        return redirect('send_staff_notification')
+
+
+

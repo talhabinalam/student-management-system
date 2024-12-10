@@ -107,3 +107,12 @@ class Subject(models.Model):
         return self.name
 
 
+class StaffNotification(models.Model):
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    status = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.staff.user.first_name + " " + self.staff.user.last_name

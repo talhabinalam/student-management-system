@@ -3476,3 +3476,25 @@ footer {
 }
 
 
+.modal-body {
+  text-align: center; /* Centers text and elements inside the modal body */
+}
+
+.modal-body form .form-group {
+  width: 100%; /* Ensures the textarea takes up full width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+textarea.form-control {
+  width: 100%; /* Makes the textarea width cover the parent container */
+  resize: none; /* Disables resize handles */
+}
+
+.modal-footer {
+  justify-content: center; /* Centers footer buttons */
+}
+
+
+
