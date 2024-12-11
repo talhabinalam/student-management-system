@@ -59,7 +59,7 @@
                     <a href="#"><i class="fas fa-bell"></i> <span>Send Student Notification</span></a>
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-user-clock"></i> <span>Staff Leave</span></a>
+                    <a href="{% url 'view_staff_leave' %}"><i class="fas fa-user-clock"></i> <span>Staff Leave</span></a>
                 </li>
                 <li>
                     <a href="#"><i class="fas fa-user-minus"></i> <span>Student Leave</span></a>
@@ -89,7 +89,7 @@
                     <a href="#"><i class="fas fa-file-alt"></i> <span>Add Result</span></a>
                 </li>
                 <li>
-                    <a href="{% url 'staff_leave' %}"><i class="fas fa-briefcase"></i> <span>Apply For Leave</span></a>
+                    <a href="{% url 'apply_staff_leave' %}"><i class="fas fa-briefcase"></i> <span>Apply For Leave</span></a>
                 </li>
                 <li>
                     <a href="{% url 'staff_notification' %}"><i class="fas fa-bell"></i> <span>Notifications</span></a>

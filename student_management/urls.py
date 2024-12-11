@@ -37,15 +37,16 @@ urlpatterns = [
     path('hod/session/delete/<int:id>/', hod_views.delete_session, name='delete_session'),
     path('hod/staff/send_notification/', hod_views.send_staff_msg, name='send_staff_notification'),
     path('hod/staff/save_message/', hod_views.save_staff_msg, name='save_staff_msg'),
+    path('hod/staff/view_leave/', hod_views.view_staff_leave, name='view_staff_leave'),
+    path('hod/staff/leave/approve/<int:id>/', hod_views.approve_leave, name='approve_leave'),
+    path('hod/staff/leave/decline/<int:id>/', hod_views.decline_leave, name='decline_leave'),
 
 
     # staff
     path('staff/home/', staff_views.home, name='staff_home'),
     path('staff/notification/', staff_views.staff_notification, name='staff_notification'),
     path('staff/notification/status/<int:id>/', staff_views.staff_msg_status, name='staff_msg_status'),
-    path('staff/apply_leave/', staff_views.staff_leave, name='staff_leave'),
-
-
+    path('staff/apply_leave/', staff_views.apply_staff_leave, name='apply_staff_leave'),
 
 
     # student

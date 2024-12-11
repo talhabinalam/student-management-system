@@ -409,6 +409,7 @@ def update_session(request, id):
     return render(request, 'hod/update-session.html', {'session':session})
 
 
+
 def delete_session(request, id):
     session = Session.objects.get(id=id)
 
@@ -420,6 +421,7 @@ def delete_session(request, id):
     return redirect('session_list')
 
 
+
 def send_staff_msg(request):
     staffs = Staff.objects.all()
     notifications = StaffNotification.objects.order_by('-created_at')[:5]
@@ -429,6 +431,7 @@ def send_staff_msg(request):
         'notifications':notifications,
     }
     return render(request, 'hod/send-staff-notification.html', context)
+
 
 
 def save_staff_msg(request):
@@ -445,6 +448,30 @@ def save_staff_msg(request):
         notification.save()
         messages.success(request, "Message has been sent!")
         return redirect('send_staff_notification')
+
+
+
+def view_staff_leave(request):
+    staffs = StaffLeave.objects.all()
+
+    context = {
+        'staffs':staffs,
+    }
+    return render(request, 'hod/view-staff-leave.html', context)
+
+
+def approve_leave(request, id):
+    staff = StaffLeave.objects.get(id=id)
+    staff.status=1
+    staff.save()
+    return redirect('view_staff_leave')
+
+
+def decline_leave(request, id):
+    staff = StaffLeave.objects.get(id=id)
+    staff.status=2
+    staff.save()
+    return redirect('view_staff_leave')
 
 
 

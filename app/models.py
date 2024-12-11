@@ -123,8 +123,9 @@ class StaffLeave(models.Model):
     subject = models.CharField(max_length=200)
     date = models.CharField(max_length=100)
     message = models.TextField()
+    status = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.staff.user.first_name + self.staff.user.last_name
+        return self.staff.user.first_name + " " + self.staff.user.last_name

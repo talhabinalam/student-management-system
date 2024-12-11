@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	<title>Preskool - Staff Leave</title> 
+{% endblock %}
+{% block content %}
+<div class="page-wrapper">
+   <div class="content container-fluid">
+      <div class="page-header">
+          <div class="row align-items-center">
+            <div class="col">
+               <h3 class="page-title">Staff Leave</h3>
+               <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'login' %}">Dashboard</a></li>
+                  <li class="breadcrumb-item active">Leave</li>
+               </ul>
+            </div>
+            <div class="col-auto text-right float-right ml-auto">
+               <a href="{% url 'add_course' %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+            </div>
+         </div>
+      </div>
+   
+   {% include 'include/alert.html' %}
+   
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="card card-table">
+               <div class="card-body">
+                  <div class="table-responsive">
+                     <table id="table_id" class="table table-hover table-center mb-0">
+                        <thead>
+                           <tr>
+                              <th>ID</th>
+                              <th>Staff</th>
+                              <th>Subject</th>
+                              <th>Leave Date</th>
+                              <th>Message</th>
+                              <th class="text-right">Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {% for staff in staffs %}
+                           <tr>
+                              <td>{{ staff.id }}</td>
+                              <td>{{ staff.staff }}</td>
+                              <td style="white-space: pre-wrap; word-wrap: break-word;">{{ staff.subject }}</td>
+                              <td>{{ staff.date }}</td>
+                              <td style="white-space: pre-wrap; word-wrap: break-word;"><small>{{ staff.message }}</small></td>
+                              <td class="text-right">
+                                 <div class="actions">
+                                 
+                                    {% if staff.status == 0 %}
+                                    <a href="{% url 'approve_leave' staff.id %}" class="btn-sm btn-success">Approve</a>
+                                    <a href="{% url 'decline_leave' staff.id %}" class="btn-sm btn-danger">Decline</a>
+                                    {% elif staff.status == 1 %}
+                                    <button class="btn-sm btn-success" disabled>Approved</button>
+                                    {% else %}
+                                    <button class="btn-sm btn-danger" disabled>Declined</button>
+                                    {% endif %} 
+                                     
+                                    <!-- Bootstrap Modal -->
+                                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                       <div class="modal-dialog" style="min-height: 70vh;">
+                                          <div class="modal-content">
+                                             <div class="modal-header justify-content-center">
+                                                <h5 class="modal-title" id="deleteModalLabel" style="text-align: center; width: 100%;">Confirm Deletion</h5>
+                                             </div>
+                                             <div class="modal-body d-flex justify-content-center align-items-center" style="flex-direction: column; text-align: center;">
+                                                <p>Are you sure you want to delete <strong id="courseName"></strong>?</p>
+                                             </div>
+                                             <div class="modal-footer justify-content-center">
+                                                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                                                 <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </td>
+                           </tr>
+                           {% endfor %}
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+    
+<script>
+   function openModal(event, name) {
+     // Prevent default action of the link
+     event.preventDefault();
+   
+     // Set student name in the modal
+     document.getElementById('courseName').textContent = name;
+   
+     // Show the modal
+     var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+     deleteModal.show();
+   
+     // Set the delete button action
+     document.getElementById('confirmDeleteBtn').onclick = function() {
+         // Redirect to the delete URL
+         window.location.href = event.target.closest('a').href;
+     };
+   
+     // Manually close the modal when Cancel is clicked
+     document.getElementById('cancelBtn').onclick = function() {
+         deleteModal.hide();
+     };
+   }
+</script>
+    
+{% endblock %}
