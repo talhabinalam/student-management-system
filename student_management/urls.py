@@ -38,9 +38,15 @@ urlpatterns = [
     path('hod/staff/send_notification/', hod_views.send_staff_msg, name='send_staff_notification'),
     path('hod/staff/save_message/', hod_views.save_staff_msg, name='save_staff_msg'),
 
+
     # staff
     path('staff/home/', staff_views.home, name='staff_home'),
-    path('staff/notification/', staff_views.notification, name='notification'),
+    path('staff/notification/', staff_views.staff_notification, name='staff_notification'),
+    path('staff/notification/status/<int:id>/', staff_views.staff_msg_status, name='staff_msg_status'),
+    path('staff/apply_leave/', staff_views.staff_leave, name='staff_leave'),
+
+
+
 
     # student
     #path('student/home/', student_views.home, name='student_home'),

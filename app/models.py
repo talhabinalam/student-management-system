@@ -116,3 +116,15 @@ class StaffNotification(models.Model):
 
     def __str__(self):
         return self.staff.user.first_name + " " + self.staff.user.last_name
+
+
+class StaffLeave(models.Model):
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=200)
+    date = models.CharField(max_length=100)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.staff.user.first_name + self.staff.user.last_name

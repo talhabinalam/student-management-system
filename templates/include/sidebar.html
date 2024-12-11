@@ -8,6 +8,8 @@
                  <li class="menu-title">
                     <span>Main Menu</span>
                  </li>
+              
+                  <!-- HOD DASHBOARD -->
                   {% if user.user_type == 'HOD' %}
                  <li class="{% active_link 'hod_home' 'active' %}">
                     <a href="{% url 'hod_home' %}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
@@ -72,6 +74,7 @@
                     <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
                 </li>
                       
+                  <!-- STAFF DASHBOARD -->
                   {% elif user.user_type == 'STAFF' %}
                  <li class="{% active_link 'staff_home' 'active' %}">
                     <a href="{% url 'staff_home' %}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
@@ -86,19 +89,19 @@
                     <a href="#"><i class="fas fa-file-alt"></i> <span>Add Result</span></a>
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-briefcase"></i> <span>Apply For Leave</span></a>
+                    <a href="{% url 'staff_leave' %}"><i class="fas fa-briefcase"></i> <span>Apply For Leave</span></a>
+                </li>
+                <li>
+                    <a href="{% url 'staff_notification' %}"><i class="fas fa-bell"></i> <span>Notifications</span></a>
                 </li>
                 <li>
                     <a href="#"><i class="fas fa-comment-dots"></i> <span>Send Feedback</span></a>
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-basketball-ball"></i> <span>Nofitications</span></a>
-                </li>
-                <li>
                     <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
                 </li>
 
-                      
+                  <!-- STUDENT DASHBOARD -->
                   {% else %}
                  <li class="{% active_link 'staff_home' 'active' %}">
                     <a href="{% url 'staff_home' %}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
