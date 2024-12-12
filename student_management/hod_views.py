@@ -42,6 +42,7 @@ def add_student(request):
         course_id = request.POST.get('course_id')
         session_id = request.POST.get('session_id')
 
+        #Verifying email exists or not
         if CustomUser.objects.filter(email=email).exists():
             messages.warning(request, "Email already exists!")
             return redirect('add_student')
@@ -50,6 +51,7 @@ def add_student(request):
             messages.error(request, "Password did not match!")
             return redirect('add_student')
 
+        #Assign values to create new user
         user = CustomUser(
             first_name=first_name,
             last_name=last_name,
@@ -59,10 +61,10 @@ def add_student(request):
             address=address,
             user_type='STUDENT'
         )
-
         user.set_password(password)
         user.save()
 
+        #Fetching exact item from database model
         course = Course.objects.get(id=course_id)
         session = Session.objects.get(id=session_id)
 
@@ -72,7 +74,6 @@ def add_student(request):
             course=course,
             session=session
         )
-
         student.save()
         messages.success(request, "Student has been saved!")
         return redirect('student_list')
@@ -87,7 +88,6 @@ def add_student(request):
 
 def student_list(request):
     students = Student.objects.all()
-
     context = {
         'students':students,
     }
@@ -109,7 +109,7 @@ def update_student(request, id):
     student_user = student.user
 
     if request.method == 'POST':
-        # Update the studentUser fields
+        # Update the CustomUser fields
         student_user.first_name = request.POST.get('first_name', student_user.first_name)
         student_user.last_name = request.POST.get('last_name', student_user.last_name)
         date_of_birth = request.POST.get('date_of_birth', student_user.date_of_birth)
@@ -302,15 +302,8 @@ def add_subject(request):
         name = request.POST.get('name')
         course_id = request.POST.get('course_id')
         staff_id = request.POST.get('staff_id')
-
-        print(course_id)
-        print(staff_id)
-
         course = Course.objects.get(id=course_id)
         staff = Staff.objects.get(id=staff_id)
-
-        print(course)
-        print(staff)
 
         subject = Subject(
             name=name,
@@ -328,7 +321,6 @@ def add_subject(request):
         'courses':courses,
         'staffs':staffs,
     }
-
     return render(request, 'hod/add-subject.html', context)
 
 
@@ -376,6 +368,7 @@ def add_session(request):
         session_start = request.POST.get('session_start')
         session_end = request.POST.get('session_end')
 
+        #Check if the session year already exists or not
         if Session.objects.filter(session_start=session_start).exists():
             messages.error(request, "Session already exists!")
             return redirect('add_session')
@@ -422,9 +415,9 @@ def delete_session(request, id):
 
 
 
-def send_staff_msg(request):
+def send_staff_notification(request):
     staffs = Staff.objects.all()
-    notifications = StaffNotification.objects.order_by('-created_at')[:5]
+    notifications = StaffNotification.objects.order_by('-created_at')[:8]
 
     context = {
         'staffs':staffs,
@@ -434,7 +427,7 @@ def send_staff_msg(request):
 
 
 
-def save_staff_msg(request):
+def save_staff_notification(request):
     if request.method == 'POST':
         staff_id = request.POST.get('staff_id')
         message = request.POST.get('message')
@@ -451,27 +444,61 @@ def save_staff_msg(request):
 
 
 
-def view_staff_leave(request):
-    staffs = StaffLeave.objects.all()
+def send_student_notification(request):
+    students = Student.objects.all()
+    return render(request, 'hod/send_student_notification.html', {'students':students})
 
+
+
+def save_student_notification(request):
+    if request.method == 'POST':
+        message = request.POST.get('message')
+
+
+
+def staff_leave(request):
+    staffs = StaffLeave.objects.all()
     context = {
         'staffs':staffs,
     }
-    return render(request, 'hod/view-staff-leave.html', context)
+    return render(request, 'hod/staff-leave.html', context)
+
 
 
 def approve_leave(request, id):
     staff = StaffLeave.objects.get(id=id)
     staff.status=1
     staff.save()
-    return redirect('view_staff_leave')
+    return redirect('staff_leave')
+
 
 
 def decline_leave(request, id):
     staff = StaffLeave.objects.get(id=id)
     staff.status=2
     staff.save()
-    return redirect('view_staff_leave')
+    return redirect('staff_leave')
 
 
 
+def staff_feedback_replay(request):
+    staff_feedback = StaffFeedback.objects.all().order_by('-created_at')[:8]
+
+    context = {
+        'staff_feedback':staff_feedback,
+    }
+    return render(request, 'hod/staff-feedback-replay.html', context)
+
+
+
+def staff_feedback_replay_save(request):
+    if request.method == 'POST':
+        feedback_id = request.POST.get('feedback_id')
+        feedback_replay = request.POST.get('feedback_replay')
+
+        #Matching captured id with the StaffFeedback table
+        feedback = StaffFeedback.objects.get(id=feedback_id)
+        feedback.feedback_replay = feedback_replay
+        feedback.save()
+        messages.success(request, "Feedback replay sent!")
+        return redirect('staff_feedback_replay')

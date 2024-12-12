@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-	<title>Preskool - Staff Notification</title> 
+	<title>Preskool - Student Notification</title> 
 {% endblock %}
 {% block content %}
 <div class="page-wrapper">
@@ -9,10 +9,10 @@
       <div class="page-header">
           <div class="row align-items-center">
             <div class="col">
-               <h3 class="page-title">STAFF</h3>
+               <h3 class="page-title">STUDENT</h3>
                <ul class="breadcrumb">
                   <li class="breadcrumb-item"><a href="{% url 'login' %}">Dashboard</a></li>
-                  <li class="breadcrumb-item active">Staff Notification</li>
+                  <li class="breadcrumb-item active">Student Notification</li>
                </ul>
             </div>
             <div class="col-auto text-right float-right ml-auto">
@@ -42,23 +42,23 @@
                            </tr>
                         </thead>
                         <tbody>
-                           {% for staff in staffs %}
+                           {% for student in students %}
                            <tr>
-                              <td>{{ staff.id }}</td>
+                              <td>{{ student.id }}</td>
                               <td>
                                  <h2 class="table-avatar">
-                                    <a href="{% url 'staff_details' staff.id %}" class="avatar avatar-sm mr-2">
-                                    {% if staff.user.photo %}
-                                    <img class="avatar-img rounded-circle" src="{{ staff.user.photo.url }}" alt="User Image" style="width: 35px; height: 35px; object-fit: cover;">
+                                    <a href="{% url 'student_details' student.id %}" class="avatar avatar-sm mr-2">
+                                    {% if student.user.photo %}
+                                    <img class="avatar-img rounded-circle" src="{{ student.user.photo.url }}" alt="User Image" style="width: 35px; height: 35px; object-fit: cover;">
                                     {% else %}
                                     <img class="avatar-img rounded-circle" src="{% static 'assets/img/profiles/avatar-01.jpg' %}" alt="User Image" style="width: 35px; height: 35px; object-fit: cover;">
                                     {% endif %}
                                     </a>
-                                    <a href="{% url 'staff_details' staff.id %}">{{ staff.user.first_name }} {{ staff.user.last_name }}</a>
+                                    <a href="{% url 'student_details' student.id %}">{{ student.user.first_name }} {{ student.user.last_name }}</a>
                                  </h2>
                               </td>
-                              <td>{{ staff.user.mobile }}</td>
-                              <td>{{ staff.user.email }}</td>
+                              <td>{{ student.user.mobile }}</td>
+                              <td>{{ student.user.email }}</td>
                               <td class="text-right">
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#sendNotification-{{ forloop.counter }}">
@@ -131,13 +131,13 @@
 </div>
 
     
-{% for staff in staffs %}
+{% for student in students %}
 <!-- Send Notification Modal -->
 <div class="modal fade" id="sendNotification-{{ forloop.counter }}" tabindex="-1" role="dialog" aria-labelledby="sendNotificationTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header justify-content-center">
-        <h5 class="modal-title" id="sendNotificationTitle">Send Notification to <strong>{{ staff.user.first_name }} {{ staff.user.last_name }}</strong></h5>
+        <h5 class="modal-title" id="sendNotificationTitle">Send Notification to <strong>{{ student.user.first_name }} {{ student.user.last_name }}</strong></h5>
         <button type="button" class="close position-absolute" style="right: 15px;" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -147,7 +147,7 @@
             {% csrf_token %}
           <div class="form-group">
             <label for="notificationMessage" class="d-block mb-3">Message</label>
-              <input type="text" class="form-control" name="staff_id" value="{{ staff.user.id }}" hidden>
+              <input type="text" class="form-control" name="student_id" value="{{ students.user.id }}">
               <textarea id="notificationMessage" class="form-control" rows="5" name="message"></textarea>
           </div>
           <button type="submit" class="btn btn-success mt-3">Send</button>

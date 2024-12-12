@@ -10,8 +10,7 @@ def get_redirect_url(user):
     elif user.user_type == 'STAFF':
         return 'staff_home'
     elif user.user_type == 'STUDENT':
-        # return 'student_home'
-        return HttpResponse("Student home")
+        return 'student_home'
     else:
         return 'login'  # Fallback for undefined user types
 
@@ -22,6 +21,7 @@ def user_login(request):
             email = request.POST.get('email')
             password = request.POST.get('password')
             user = authenticate(request, username=email, password=password)
+            print(user)
             if user is not None:
                 login(request, user)
                 # return redirect(get_redirect_url(request.user))
@@ -30,7 +30,7 @@ def user_login(request):
                 elif user.user_type == 'STAFF':
                     return redirect('staff_home')
                 elif user.user_type == 'STUDENT':
-                    return HttpResponse("Student home")
+                    return redirect('student_home')
             else:
                 messages.error(request, "Invalid email or password!")
                 return redirect('login')

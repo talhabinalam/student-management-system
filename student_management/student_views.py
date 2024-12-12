@@ -4,4 +4,8 @@ from django.views import View
 from django.contrib import messages
 
 
+def home(request):
+    return render(request, "student/home.html")
+
+
 

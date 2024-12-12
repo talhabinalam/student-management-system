@@ -47,6 +47,7 @@ def apply_staff_leave(request):
         messages.success(request, "Leave application has been sent!")
         return redirect('apply_staff_leave')
 
+    #Getch the queryset by filtering user
     staff_id = Staff.objects.filter(user=request.user.id)
     for i in staff_id:
         staff = i.id
@@ -55,6 +56,30 @@ def apply_staff_leave(request):
     context = {
         'leave_history':leave_history,
     }
-
     return render(request, 'staff/staff-leave.html', context)
+
+
+
+def staff_feedback(request):
+    if request.method == 'POST':
+        feedback = request.POST.get('feedback')
+
+        #Fetch the requested staff using foreignkey
+        staff = Staff.objects.get(user=request.user.id)
+        feedback = StaffFeedback(
+            staff=staff,
+            feedback=feedback,
+            feedback_replay="",
+        )
+        feedback.save()
+        messages.success(request, "Feedback has been sent!")
+        return redirect('staff_feedback')
+
+    staff = Staff.objects.get(user=request.user.id)
+    feedbacks = StaffFeedback.objects.filter(staff=staff)
+
+    context = {
+        'feedbacks':feedbacks,
+    }
+    return render(request, 'staff/staff-feedback.html', context)
 

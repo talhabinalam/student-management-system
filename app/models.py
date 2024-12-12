@@ -31,8 +31,8 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     CHOICES = (
         ('HOD', 'HOD'),
-        ('STUDENT', 'STUDENT'),
-        ('STAFF', 'STAFF')
+        ('STAFF', 'STAFF'),
+        ('STUDENT', 'STUDENT')
     )
 
     username = None
@@ -107,6 +107,7 @@ class Subject(models.Model):
         return self.name
 
 
+
 class StaffNotification(models.Model):
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
     message = models.TextField()
@@ -116,6 +117,19 @@ class StaffNotification(models.Model):
 
     def __str__(self):
         return self.staff.user.first_name + " " + self.staff.user.last_name
+
+
+
+class StudentNotification(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    status = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.student.user.first_name + " " + self.student.user.last_name
+
 
 
 class StaffLeave(models.Model):
@@ -129,3 +143,15 @@ class StaffLeave(models.Model):
 
     def __str__(self):
         return self.staff.user.first_name + " " + self.staff.user.last_name
+
+
+class StaffFeedback(models.Model):
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    feedback = models.TextField()
+    feedback_replay = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.staff.user.first_name + " " + self.staff.user.last_name
+
