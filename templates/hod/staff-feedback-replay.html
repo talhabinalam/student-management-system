@@ -42,17 +42,21 @@
                            </tr>
                         </thead>
                         <tbody>
-                           {% for feedback in staff_feedback %}
+                           {% for staff in staff_feedback %}
                            <tr>
-                              <td>{{ feedback.id }}</td>
-                              <td>{{ feedback.staff }}</td>
-                              <td style="white-space: pre-wrap; word-wrap: break-word;">{{ feedback.feedback }}</td>
-                              <td>{{ feedback.created_at }}</td>
+                              <td>{{ staff.id }}</td>
+                              <td>{{ staff.staff }}</td>
+                              <td style="white-space: pre-wrap; word-wrap: break-word;">{{ staff.feedback }}</td>
+                              <td>{{ staff.created_at }}</td>
                               <td class="text-right">
                             <!-- Button trigger modal -->
+                            {% if staff.is_replied %}
+                          	<button class="btn btn-success" disabled>Replied</button>
+                            {% else %} 
                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#sendFeedback-{{ forloop.counter }}">
                               Replay 
                             </button>
+                            {% endif %}
                                   
                               </td>
                            </tr>
@@ -72,7 +76,7 @@
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header justify-content-center">
-        <h5 class="modal-title" id="viewNotificationTitle">Notifications</h5>
+        <h5 class="modal-title" id="viewNotificationTitle">Replies</h5>
         <button type="button" class="close position-absolute" style="right: 15px;" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -132,7 +136,7 @@
         </button>
       </div>
       <div class="modal-body text-center">
-        <form action="{% url 'staff_feedback_replay_save' %}" method="POST">
+        <form action="{% url 'staff_feedback_replay' %}" method="POST">
             {% csrf_token %}
           <div class="form-group">
             <label for="notificationMessage" class="d-block mb-3">Message</label>

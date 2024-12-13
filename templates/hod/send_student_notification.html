@@ -105,8 +105,8 @@
                     <tbody>
                       {% for notification in notifications %}
                       <tr>
-                        <td class="text-left" style="width: 30%;">{{ notification.staff.user.first_name }}</td>
-                        <td>{{ notification.message|truncatechars:55 }}</td>
+                        <td class="text-left" style="width: 30%;">{{ notification.student.user.first_name }} {{ notification.student.user.last_name }}</td>
+                        <td>{{ notification.message|truncatechars:50 }}</td>
                         {% if notification.status == 0 %}
                         <td class="text-right" style="width: 30%;">
                           <span class="badge badge-info">Delivered</span>
@@ -137,17 +137,17 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header justify-content-center">
-        <h5 class="modal-title" id="sendNotificationTitle">Send Notification to <strong>{{ student.user.first_name }} {{ student.user.last_name }}</strong></h5>
+        <h5 class="modal-title" id="sendNotificationTitle"><small>Send Notification to <strong>{{ student.user.first_name }} {{ student.user.last_name }}</strong></small></h5>
         <button type="button" class="close position-absolute" style="right: 15px;" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body text-center">
-        <form action="{% url 'save_staff_notification' %}" method="POST">
+        <form action="{% url 'save_student_notification' %}" method="POST">
             {% csrf_token %}
           <div class="form-group">
             <label for="notificationMessage" class="d-block mb-3">Message</label>
-              <input type="text" class="form-control" name="student_id" value="{{ students.user.id }}">
+              <input type="text" class="form-control" name="student_id" value="{{ student.id }}" hidden>
               <textarea id="notificationMessage" class="form-control" rows="5" name="message"></textarea>
           </div>
           <button type="submit" class="btn btn-success mt-3">Send</button>

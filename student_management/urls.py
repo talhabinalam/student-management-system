@@ -36,25 +36,34 @@ urlpatterns = [
     path('hod/session/update/<int:id>/', hod_views.update_session, name='update_session'),
     path('hod/session/delete/<int:id>/', hod_views.delete_session, name='delete_session'),
     path('hod/staff/send_notification/', hod_views.send_staff_notification, name='send_staff_notification'),
-    path('hod/staff/save_message/', hod_views.save_staff_notification, name='save_staff_notification'),
+    path('hod/staff/save_notification/', hod_views.save_staff_notification, name='save_staff_notification'),
     path('hod/student/send_notification/', hod_views.send_student_notification, name='send_student_notification'),
+    path('hod/student/save_notification/', hod_views.save_student_notification, name='save_student_notification'),
     path('hod/staff/view_leave/', hod_views.staff_leave, name='staff_leave'),
-    path('hod/staff/leave/approve/<int:id>/', hod_views.approve_leave, name='approve_leave'),
-    path('hod/staff/leave/decline/<int:id>/', hod_views.decline_leave, name='decline_leave'),
+    path('hod/staff/leave/approve/<int:id>/', hod_views.staff_approve_leave, name='staff_approve_leave'),
+    path('hod/staff/leave/decline/<int:id>/', hod_views.staff_decline_leave, name='staff_decline_leave'),
     path('hod/staff/feedback/replay/', hod_views.staff_feedback_replay, name='staff_feedback_replay'),
-    path('hod/staff/feedback/replay/save/', hod_views.staff_feedback_replay_save, name='staff_feedback_replay_save'),
+    path('hod/student/leave/', hod_views.student_leave, name='student_leave'),
+    path('hod/student/leave/approve/<int:id>/', hod_views.student_approve_leave, name='student_approve_leave'),
+    path('hod/student/leave/decline/<int:id>/', hod_views.student_decline_leave, name='student_decline_leave'),
+    path('hod/student/feedback/replay/', hod_views.student_feedback_replay, name='student_feedback_replay'),
 
 
     # staff
     path('staff/home/', staff_views.home, name='staff_home'),
     path('staff/notification/', staff_views.staff_notification, name='staff_notification'),
-    path('staff/notification/status/<int:id>/', staff_views.staff_msg_status, name='staff_msg_status'),
+    path('staff/notification/status/<int:id>/', staff_views.staff_notification_status, name='staff_notification_status'),
     path('staff/apply_leave/', staff_views.apply_staff_leave, name='apply_staff_leave'),
     path('staff/feedback/', staff_views.staff_feedback, name='staff_feedback'),
 
 
     # student
     path('student/home/', student_views.home, name='student_home'),
+    path('student/notification/', student_views.student_notification, name='student_notification'),
+    path('student/notification/save/<int:id>/', student_views.student_notification_status, name='student_notification_status'),
+    path('student/apply_leave/', student_views.apply_student_leave, name='apply_student_leave'),
+    path('student/feedback/', student_views.student_feedback, name='student_feedback'),
+
 
 
     path('profile/', views.profile, name='profile'),

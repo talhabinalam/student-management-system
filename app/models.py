@@ -7,7 +7,7 @@ class CustomUserManager(BaseUserManager):
         """Create and return a regular user with an email and password."""
         if not email:
             raise ValueError('The Email field must be set')
-        email = self.normalize_email(email)
+        email = self.normalize_email(email).lower()
         extra_fields.setdefault('first_name', '')
         extra_fields.setdefault('last_name', '')
         user = self.model(email=email, **extra_fields)
@@ -145,13 +145,39 @@ class StaffLeave(models.Model):
         return self.staff.user.first_name + " " + self.staff.user.last_name
 
 
+class StudentLeave(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=200)
+    date = models.CharField(max_length=100)
+    message = models.TextField()
+    status = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.student.user.first_name + " " + self.student.user.last_name
+
+
 class StaffFeedback(models.Model):
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
     feedback = models.TextField()
-    feedback_replay = models.TextField()
+    feedback_replay = models.TextField(null=True, blank=True)
+    is_replied = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.staff.user.first_name + " " + self.staff.user.last_name
+
+
+class StudentFeedback(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    feedback = models.TextField()
+    feedback_replay = models.TextField(null=True, blank=True)
+    is_replied = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.student.user.first_name + " " + self.student.user.last_name
 

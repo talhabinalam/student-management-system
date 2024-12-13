@@ -61,14 +61,14 @@
                 <li class="{% active_link 'staff_leave' 'active' %}">
                     <a href="{% url 'staff_leave' %}"><i class="fas fa-user-clock"></i> <span>Staff Leave</span></a>
                 </li>
-                <li>
-                    <a href="#"><i class="fas fa-user-minus"></i> <span>Student Leave</span></a>
+                <li class="{% active_link 'student_leave' 'active' %}">
+                    <a href="{% url 'student_leave' %}"><i class="fas fa-user-minus"></i> <span>Student Leave</span></a>
                 </li>
                 <li class="{% active_link 'staff_feedback_replay' 'active' %}">
                     <a href="{% url 'staff_feedback_replay' %}"><i class="fas fa-comments"></i> <span>Staff Feedback</span></a>
                 </li>
-                <li>
-                    <a href="#"><i class="fas fa-comment-alt"></i> <span>Student Feedback</span></a>
+                <li class="{% active_link 'student_feedback_replay' 'active' %}">
+                    <a href="{% url 'student_feedback_replay' %}"><i class="fas fa-comment-alt"></i> <span>Student Feedback</span></a>
                 </li>
                 <li>
                     <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
@@ -113,13 +113,13 @@
                     <a href="#"><i class="fas fa-file-alt"></i> <span>View Result</span></a>
                 </li>
                 <li>
-                    <a href="{% url 'apply_staff_leave' %}"><i class="fas fa-briefcase"></i> <span>Apply For Leave</span></a>
+                    <a href="{% url 'apply_student_leave' %}"><i class="fas fa-briefcase"></i> <span>Apply For Leave</span></a>
                 </li>
                 <li>
-                    <a href="{% url 'staff_notification' %}"><i class="fas fa-bell"></i> <span>Notifications</span></a>
+                    <a href="{% url 'student_notification' %}"><i class="fas fa-bell"></i> <span>Notifications</span></a>
                 </li>
                 <li>
-                    <a href="{% url 'staff_feedback' %}"><i class="fas fa-comment-dots"></i> <span>Send Feedback</span></a>
+                    <a href="{% url 'student_feedback' %}"><i class="fas fa-comment-dots"></i> <span>Send Feedback</span></a>
                 </li>
                 <li>
                     <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>

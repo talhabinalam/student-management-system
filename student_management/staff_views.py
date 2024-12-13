@@ -18,11 +18,10 @@ def staff_notification(request):
     context = {
         'notifications':notifications,
     }
-
     return render(request, 'staff/notification.html', context)
 
 
-def staff_msg_status(request, id):
+def staff_notification_status(request, id):
     notification = StaffNotification.objects.get(id=id)
     notification.status = 1
     notification.save()

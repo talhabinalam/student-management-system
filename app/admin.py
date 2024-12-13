@@ -2,6 +2,10 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import *
 
+#Custom admin title
+admin.site.site_header = "Student Management"
+admin.site.index_title = "Administration"
+
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
 
@@ -52,4 +56,6 @@ admin.site.register(Subject)
 admin.site.register(StaffNotification)
 admin.site.register(StudentNotification)
 admin.site.register(StaffLeave)
+admin.site.register(StudentLeave)
 admin.site.register(StaffFeedback)
+admin.site.register(StudentFeedback)

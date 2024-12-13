@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-	<title> Preskool - Apply Leave</title> 
+	<title> Preskool - Apply staff</title> 
 {% endblock %}
 {% block content %}
 	
@@ -10,14 +10,14 @@
                   <div class="row align-items-center">
                       {% include 'include/alert.html' %}
                      <div class="col">
-                            <h3 class="page-title">STAFF</h3>
+                            <h3 class="page-title">STUDENT</h3>
                              <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'login' %}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Apply for Leave</li>
+                            <li class="breadcrumb-item active">Apply for staff</li>
                         </ul>
                      </div>
                       <div class="col-auto text-right float-right ml-auto">
-                          <button class="btn btn-primary mr-2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button"><i class="fa fa-pray">&nbsp; Leave Application History</i></button>
+                          <button class="btn btn-primary mr-2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button"><i class="fa fa-pray">&nbsp; Student Application History</i></button>
                       </div>
                   </div>
                </div>
@@ -25,9 +25,9 @@
                   <div class="col-sm-12">
                      <div class="card">
                         <div class="card-body">
-                       <form action="{% url 'apply_staff_leave' %}" method="POST">
+                       <form action="{% url 'apply_student_leave' %}" method="POST">
                            <div class="col-12">
-                             <h5 class="form-title"><span>Leave Application</span></h5>
+                             <h5 class="form-title"><span>Student Application</span></h5>
                            </div>
                             {% csrf_token %}
                             <div class="col-sm-12">
@@ -86,7 +86,7 @@
                            </tr>
                         </thead>
                         <tbody>
-                           {% for leave in leave_history %}
+                           {% for leave in student_leave %}
                            <tr>
                               <td>{{ leave.date }}</td>
                               <td>{{ leave.message|truncatechars:50}}</td>

@@ -37,20 +37,20 @@
                            </tr>
                         </thead>
                         <tbody>
-                           {% for staff in staffs %}
+                           {% for student in students %}
                            <tr>
-                              <td>{{ staff.id }}</td>
-                              <td>{{ staff.staff }}</td>
-                              <td style="white-space: pre-wrap; word-wrap: break-word;">{{ staff.subject }}</td>
-                              <td>{{ staff.date }}</td>
-                              <td style="white-space: pre-wrap; word-wrap: break-word;"><small>{{ staff.message }}</small></td>
+                              <td>{{ student.id }}</td>
+                              <td>{{ student.student }}</td>
+                              <td style="white-space: pre-wrap; word-wrap: break-word;">{{ student.subject }}</td>
+                              <td>{{ student.date }}</td>
+                              <td style="white-space: pre-wrap; word-wrap: break-word;"><small>{{ student.message }}</small></td>
                               <td class="text-right">
                                  <div class="actions">
                                  
-                                    {% if staff.status == 0 %}
-                                    <a href="{% url 'staff_approve_leave' staff.id %}" class="btn-sm btn-success">Approve</a>
-                                    <a href="{% url 'staff_decline_leave' staff.id %}" class="btn-sm btn-danger">Decline</a>
-                                    {% elif staff.status == 1 %}
+                                    {% if student.status == 0 %}
+                                    <a href="{% url 'student_approve_leave' student.id %}" class="btn-sm btn-success">Approve</a>
+                                    <a href="{% url 'student_decline_leave' student.id %}" class="btn-sm btn-danger">Decline</a>
+                                    {% elif student.status == 1 %}
                                     <button class="btn-sm btn-success" disabled>Approved</button>
                                     {% else %}
                                     <button class="btn-sm btn-danger" disabled>Declined</button>

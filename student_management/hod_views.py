@@ -432,6 +432,7 @@ def save_staff_notification(request):
         staff_id = request.POST.get('staff_id')
         message = request.POST.get('message')
 
+        #Matching the staff id got from input value
         staff = Staff.objects.get(user=staff_id)
 
         notification = StaffNotification(
@@ -446,13 +447,31 @@ def save_staff_notification(request):
 
 def send_student_notification(request):
     students = Student.objects.all()
-    return render(request, 'hod/send_student_notification.html', {'students':students})
+    notifications = StudentNotification.objects.all().order_by('-created_at')[:8]
+
+    context = {
+        'students':students,
+        'notifications':notifications,
+    }
+    return render(request, 'hod/send_student_notification.html', context)
 
 
 
 def save_student_notification(request):
     if request.method == 'POST':
+        student_id = request.POST.get('student_id')
         message = request.POST.get('message')
+
+        #Matching the student id got from input value
+        student = Student.objects.get(id=student_id)
+
+        student = StudentNotification(
+            student=student,
+            message=message,
+        )
+        student.save()
+        messages.success(request, "Notification has been sent to the student!")
+        return redirect('send_student_notification')
 
 
 
@@ -465,7 +484,7 @@ def staff_leave(request):
 
 
 
-def approve_leave(request, id):
+def staff_approve_leave(request, id):
     staff = StaffLeave.objects.get(id=id)
     staff.status=1
     staff.save()
@@ -473,7 +492,7 @@ def approve_leave(request, id):
 
 
 
-def decline_leave(request, id):
+def staff_decline_leave(request, id):
     staff = StaffLeave.objects.get(id=id)
     staff.status=2
     staff.save()
@@ -482,16 +501,6 @@ def decline_leave(request, id):
 
 
 def staff_feedback_replay(request):
-    staff_feedback = StaffFeedback.objects.all().order_by('-created_at')[:8]
-
-    context = {
-        'staff_feedback':staff_feedback,
-    }
-    return render(request, 'hod/staff-feedback-replay.html', context)
-
-
-
-def staff_feedback_replay_save(request):
     if request.method == 'POST':
         feedback_id = request.POST.get('feedback_id')
         feedback_replay = request.POST.get('feedback_replay')
@@ -499,6 +508,58 @@ def staff_feedback_replay_save(request):
         #Matching captured id with the StaffFeedback table
         feedback = StaffFeedback.objects.get(id=feedback_id)
         feedback.feedback_replay = feedback_replay
+        feedback.is_replied = True
         feedback.save()
         messages.success(request, "Feedback replay sent!")
         return redirect('staff_feedback_replay')
+
+    staff_feedback = StaffFeedback.objects.all().order_by('-created_at')[:8]
+    context = {
+        'staff_feedback':staff_feedback,
+    }
+    return render(request, 'hod/staff-feedback-replay.html', context)
+
+
+
+def student_leave(request):
+    students = StudentLeave.objects.all()
+    context = {
+        'students':students,
+    }
+    return render(request, 'hod/student-leave.html', context)
+
+
+def student_approve_leave(request, id):
+    student = StudentLeave.objects.get(id=id)
+    student.status = 1
+    student.save()
+    return redirect('student_leave')
+
+
+def student_decline_leave(request, id):
+    student = StudentLeave.objects.get(id=id)
+    student.status = 2
+    student.save()
+    return redirect('student_leave')
+
+
+def student_feedback_replay(request):
+    if request.method == 'POST':
+        feedback_replay = request.POST.get('feedback_replay')
+        feedback_id = request.POST.get('feedback_id')
+        student_feedback = StudentFeedback.objects.get(id=feedback_id)
+
+        student_feedback.feedback_replay = feedback_replay
+        student_feedback.is_replied = True
+        student_feedback.save()
+        messages.success(request, "Replay has been sent!")
+        return redirect('student_feedback_replay')
+
+    student_feedback = StudentFeedback.objects.all()
+    context = {
+        'student_feedback':student_feedback,
+    }
+    return render(request, 'hod/student-feedback-replay.html', context)
+
+
+
