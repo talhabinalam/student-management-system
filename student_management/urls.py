@@ -55,6 +55,8 @@ urlpatterns = [
     path('staff/notification/status/<int:id>/', staff_views.staff_notification_status, name='staff_notification_status'),
     path('staff/apply_leave/', staff_views.apply_staff_leave, name='apply_staff_leave'),
     path('staff/feedback/', staff_views.staff_feedback, name='staff_feedback'),
+    path('staff/take_attendance/', staff_views.staff_take_attendance, name='staff_take_attendance'),
+    path('staff/save_attendance/', staff_views.staff_save_attendance, name='staff_save_attendance'),
 
 
     # student
@@ -63,7 +65,6 @@ urlpatterns = [
     path('student/notification/save/<int:id>/', student_views.student_notification_status, name='student_notification_status'),
     path('student/apply_leave/', student_views.apply_student_leave, name='apply_student_leave'),
     path('student/feedback/', student_views.student_feedback, name='student_feedback'),
-
 
 
     path('profile/', views.profile, name='profile'),

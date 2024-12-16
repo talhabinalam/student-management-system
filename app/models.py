@@ -181,3 +181,25 @@ class StudentFeedback(models.Model):
     def __str__(self):
         return self.student.user.first_name + " " + self.student.user.last_name
 
+
+class Attendance(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.DO_NOTHING)
+    session = models.ForeignKey(Session, on_delete=models.DO_NOTHING)
+    date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.subject.name
+
+
+class AttendanceReport(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.DO_NOTHING)
+    attendance = models.ForeignKey(Attendance, on_delete=models.DO_NOTHING)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.student.user.first_name
+
+
