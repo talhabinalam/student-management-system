@@ -47,6 +47,7 @@ urlpatterns = [
     path('hod/student/leave/approve/<int:id>/', hod_views.student_approve_leave, name='student_approve_leave'),
     path('hod/student/leave/decline/<int:id>/', hod_views.student_decline_leave, name='student_decline_leave'),
     path('hod/student/feedback/replay/', hod_views.student_feedback_replay, name='student_feedback_replay'),
+    path('hod/view_attendance', hod_views.hod_view_attendance, name='hod_view_attendance'),
 
 
     # staff
@@ -57,6 +58,8 @@ urlpatterns = [
     path('staff/feedback/', staff_views.staff_feedback, name='staff_feedback'),
     path('staff/take_attendance/', staff_views.staff_take_attendance, name='staff_take_attendance'),
     path('staff/save_attendance/', staff_views.staff_save_attendance, name='staff_save_attendance'),
+    path('staff/view_attendance/', staff_views.staff_view_attendance, name='staff_view_attendance'),
+    path('staff/add_result/', staff_views.add_result, name='add_result'),
 
 
     # student
@@ -65,6 +68,7 @@ urlpatterns = [
     path('student/notification/save/<int:id>/', student_views.student_notification_status, name='student_notification_status'),
     path('student/apply_leave/', student_views.apply_student_leave, name='apply_student_leave'),
     path('student/feedback/', student_views.student_feedback, name='student_feedback'),
+    path('student/view_attendance/', student_views.student_view_attendance, name='student_view_attendance'),
 
 
     path('profile/', views.profile, name='profile'),

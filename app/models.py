@@ -97,9 +97,9 @@ class Staff(models.Model):
 
 
 class Subject(models.Model):
-    name = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -198,6 +198,19 @@ class AttendanceReport(models.Model):
     attendance = models.ForeignKey(Attendance, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.student.user.first_name
+
+
+class StudentResult(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    quiz_mark = models.IntegerField()
+    exam_mark = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
         return self.student.user.first_name

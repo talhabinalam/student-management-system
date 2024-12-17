@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}
+	<title> Preskool - Add Course</title>
+{% endblock %}
+{% block content %}
+
+    <div class="page-wrapper">
+       <div class="content container-fluid">
+          <div class="page-header">
+             <div class="row align-items-center">
+                {% include 'include/alert.html' %}
+                <div class="col">
+                   <h3 class="page-title">STUDENT</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">View Attendance</li>
+                    </ul>
+                </div>
+             </div>
+          </div>
+          <div class="row">
+             <div class="col-sm-12">
+                <div class="card">
+                   <div class="card-body">
+                   {% if action is None %}
+                      <form action="?action=view_attendance" method="POST">
+                         {% csrf_token %}
+                          <div class="col-sm-12">
+                                <label>Subject</label>
+                                <select class="form-control" name="subject_id" required>
+                                    <option selected disabled>Select Subject</option>
+                                    {% for subject in subjects %}
+                                        <option value="{{ subject.id }}">{{ subject }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                         <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary">View Attendance</button>
+                         </div>
+                      {% else %}
+                          <div class="col-sm-12">
+                             <label>Subject</label>
+                             <input class="form-control" name="subject" value="{{ get_subject }}" readonly />
+                          </div>
+                       <br>
+                         <div class="row">
+                            <div class="col-sm-12">
+                               <div class="card card-table">
+                                  <div class="card-body">
+                                     <div class="table-responsive">
+                                        <table id="table_id" class="table table-hover table-center mb-0">
+                                           <thead>
+                                              <tr>
+                                                 <th>Date</th>
+                                                  <th>Course</th>
+                                                  <th>Session</th>
+                                              </tr>
+                                           </thead>
+                                           <tbody>
+                                              {% for attendance in attendance_report %}
+                                              <tr>
+                                                 <td>{{ attendance.attendance.date }}</td>
+                                                 <td>{{ attendance.student.course }}</td>
+                                                 <td>{{ attendance.student.session }}</td>
+                                              </tr>
+                                              {% endfor %}
+                                           </tbody>
+                                        </table>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                      {% endif %}
+                      </form>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+
+{% endblock %}

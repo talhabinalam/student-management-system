@@ -31,7 +31,7 @@
                                   <div class="col-sm-12">
                                         <label>Subject</label>
                                         <select class="form-control" name="subject_id" required>
-                                            <option>Select Course</option>
+                                            <option selected disabled>Select Course</option>
                                             {% for subject in subjects %}
                                                 <option value="{{ subject.id }}">{{ subject }}</option>
                                             {% endfor %}
@@ -41,7 +41,7 @@
                                   <div class="col-sm-12">
                                         <label>Session</label>
                                         <select class="form-control" name="session_id" required>
-                                            <option>Select Staff</option>
+                                            <option selected disabled>Select Session</option>
                                             {% for session in sessions %}
                                                 <option value="{{ session.id }}">{{ session }}</option>
                                             {% endfor %}
