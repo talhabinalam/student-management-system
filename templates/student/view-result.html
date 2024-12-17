@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Preskool - Result</title>
+{% endblock %}
+{% block content %}
+<div class="page-wrapper">
+   <div class="content container-fluid">
+      <div class="page-header">
+         <div class="row align-items-center">
+            <div class="col">
+               <h3 class="page-title">STUDENT</h3>
+               <ul class="breadcrumb">
+                  <li class="breadcrumb-item active">View Result</li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      {% include 'include/alert.html' %}
+       <div class="row">
+        <div class="col-sm-12">
+           <div class="card card-table">
+              <div class="card-body">
+                 <div class="table-responsive">
+                    <table id="table_id" class="table table-hover table-center mb-0">
+                       <thead>
+                          <tr>
+                             <th>Subject</th>
+                             <th>Quiz Mark</th>
+                             <th>Exam Mark</th>
+                             <th>Date</th>
+                             <th>Status</th>
+                          </tr>
+                       </thead>
+                       <tbody>
+                          {% for result in student_result %}
+                          <tr>
+                             <td>{{ result.subject }}</td>
+                             <td>{{ result.quiz_mark }}</td>
+                             <td>{{ result.exam_mark }}</td>
+                             <td>{{ result.created_at }}</td>
+                             <td class="text-right">
+                                 {% if marks >= 40 %}
+                                 	<span class="badge badge-success">Pass</span>
+                                     {% else %}
+                                     <span class="badge badge-danger">Fail</span>
+                                 {% endif %} 
+                             </td>
+                          </tr>
+                          {% endfor %}
+                       </tbody>
+                    </table>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+   </div>
+</div>
+{% endblock %}

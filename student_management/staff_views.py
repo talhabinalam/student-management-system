@@ -178,4 +178,51 @@ def staff_view_attendance(request):
 
 
 def add_result(request):
-    return render(request, 'staff/add-result.html')
+    staff = Staff.objects.get(user=request.user)
+    subjects = Subject.objects.filter(staff=staff)
+    sessions = Session.objects.all()
+
+    action = request.GET.get('action')
+
+    get_subject = None
+    get_session = None
+    students = None
+
+    if action is not None:
+        if request.method == 'POST':
+            subject_id = request.POST.get('subject_id')
+            session_id = request.POST.get('session_id')
+
+            get_subject = Subject.objects.get(id=subject_id)
+            get_session = Session.objects.get(id=session_id)
+
+            students = Student.objects.filter(course=get_subject.course, session=get_session)
+
+    context = {
+        'subjects':subjects,
+        'sessions':sessions,
+        'action':action,
+        'get_subject':get_subject,
+        'get_session':get_session,
+        'students':students,
+
+    }
+
+    return render(request, 'staff/add-result.html', context)
+
+
+def save_result(request):
+    if request.method == 'POST':
+        student_id = request.POST.get('student_id')
+        subject = request.POST.get('subject')
+        quiz_mark = request.POST.get('quiz_mark')
+        exam_mark = request.POST.get('exam_mark')
+
+        subject = Subject.objects.get(name=subject)
+        student = Student.objects.get(id=student_id)
+
+        StudentResult.objects.create(
+            student=student, subject=subject, quiz_mark=quiz_mark, exam_mark=exam_mark
+        )
+        messages.success(request, "Result has been added!")
+        return redirect('add_result')

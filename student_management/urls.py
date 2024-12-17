@@ -60,6 +60,7 @@ urlpatterns = [
     path('staff/save_attendance/', staff_views.staff_save_attendance, name='staff_save_attendance'),
     path('staff/view_attendance/', staff_views.staff_view_attendance, name='staff_view_attendance'),
     path('staff/add_result/', staff_views.add_result, name='add_result'),
+    path('staff/save_result/', staff_views.save_result, name='save_result'),
 
 
     # student
@@ -69,6 +70,7 @@ urlpatterns = [
     path('student/apply_leave/', student_views.apply_student_leave, name='apply_student_leave'),
     path('student/feedback/', student_views.student_feedback, name='student_feedback'),
     path('student/view_attendance/', student_views.student_view_attendance, name='student_view_attendance'),
+    path('student/view_result/', student_views.view_result, name='view_result'),
 
 
     path('profile/', views.profile, name='profile'),

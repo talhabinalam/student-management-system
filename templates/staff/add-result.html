@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block title %}
+	<title>Preskool - Result</title>
+{% endblock %}
+{% block content %}
+
+    <div class="page-wrapper">
+            <div class="content container-fluid">
+               <div class="page-header">
+                  <div class="row align-items-center">
+                     <div class="col">
+                        <h3 class="page-title">STAFF</h3>
+                        <ul class="breadcrumb">
+                           <li class="breadcrumb-item active">Add Result</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            {% include 'include/alert.html' %}
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="card">
+                        <div class="card-body">
+                        {% if action is None %}
+                           <form action="?action=get_student" method="POST">
+                               {% csrf_token %}
+                                 <div class="col-12">
+                                    <h5 class="form-title"><span>Add Result</span></h5>
+                                 </div>
+                                  <div class="col-sm-12">
+                                        <label>Subject</label>
+                                        <select class="form-control" name="subject_id" required>
+                                            <option selected disabled>Select Course</option>
+                                            {% for subject in subjects %}
+                                                <option value="{{ subject.id }}">{{ subject }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <br>
+                                  <div class="col-sm-12">
+                                        <label>Session</label>
+                                        <select class="form-control" name="session_id" required>
+                                            <option selected disabled>Select Session</option>
+                                            {% for session in sessions %}
+                                                <option value="{{ session.id }}">{{ session }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <br>
+                                 <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Fetch Students</button>
+                                 </div>
+                           </form>
+                        {% else %}
+                           <form action="{% url 'save_result' %}" method="POST">
+                               {% csrf_token %}
+                                 <div class="col-12">
+                                    <h5 class="form-title"><span>Add Result</span></h5>
+                                 </div>
+                               <div class="row">
+                                  <div class="col-12 col-sm-6">
+                                    <label>Subject</label>
+                                    <input class="form-control" name="subject" value="{{ get_subject }}" readonly />
+                                </div>
+                                  <br>
+                                  <div class="col-12 col-sm-6">
+                                     <label>Session</label>
+                                     <input class="form-control" name="session" value="{{ get_session }}" readonly />
+                                  </div>
+                               </div>
+                                  <br>
+                                  <div class="col-sm-13">
+                                        <label>Students</label>
+                                        <select class="form-control" name="student_id" required>
+                                            <option selected disabled>Select Student</option>
+                                            {% for student in students %}
+                                                <option value="{{ student.id }}">{{ student }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <br>
+                               <div class="row">
+                                  <div class="col-12 col-sm-6">
+                                    <label>Quiz Mark</label>
+                                    <input class="form-control" name="quiz_mark" />
+                                </div>
+                                  <br>
+                                  <div class="col-12 col-sm-6">
+                                     <label>Exam Mark</label>
+                                     <input class="form-control" name="exam_mark" />
+                                  </div>
+                               </div>
+                               <br>
+                                 <div class="col-sm-12">
+                                    <button type="submit" class="btn btn-primary">Submit Result</button>
+                                 </div>
+                           </form>
+                        {% endif %}
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+{% endblock %}

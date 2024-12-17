@@ -124,3 +124,20 @@ def student_view_attendance(request):
         'attendance_report':attendance_report,
     }
     return render(request, 'student/view-attendance.html', context)
+
+
+def view_result(request):
+    student = Student.objects.get(user=request.user)
+    student_result = StudentResult.objects.filter(student=student)
+
+    marks = None
+    for i in student_result:
+        quiz = i.quiz_mark
+        exam = i.exam_mark
+        marks = quiz + exam
+
+    context = {
+        'student_result':student_result,
+        'marks':marks,
+    }
+    return render(request, 'student/view-result.html', context)
