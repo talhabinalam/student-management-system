@@ -1,11 +1,223 @@
 {% extends 'base.html' %}
-
 {% block title %}
-	<title>STAFF - Dashboard</title> 
+	<title>STAFF - Dashboard</title>
 {% endblock %}
 
+<style>
+    #pie-chart, #line-chart {
+    height: 350px;  /* Adjust the height as needed */
+    width: 100%;    /* Make it responsive */
+}
+</style>
+
 {% block content %}
-	
-    
-    
+	<!--Dashboard Layout starts-->
+         <div class="page-wrapper">
+            <div class="content container-fluid">
+               <div class="page-header">
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <h3 class="page-title">Welcome STAFF!</h3>
+
+                        <ul class="breadcrumb">
+                           <li class="breadcrumb-item active">Dashboard</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                     <div class="card bg-one w-100">
+                        <div class="card-body">
+                           <div class="db-widgets d-flex justify-content-between align-items-center">
+                              <div class="db-icon">
+                                 <i class="fas fa-chalkboard-teacher fa-2x"></i>
+                              </div>
+                              <div class="db-info">
+                                 <h3>5</h3>
+                                 <h6>Subjects</h6>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                     <div class="card bg-two w-100">
+                        <div class="card-body">
+                           <div class="db-widgets d-flex justify-content-between align-items-center">
+                              <div class="db-icon">
+                                 <i class="fas fa-graduation-cap"></i>
+                              </div>
+                              <div class="db-info">
+                                 <h3>45</h3>
+                                 <h6>Students</h6>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                     <div class="card bg-three w-100">
+                        <div class="card-body">
+                           <div class="db-widgets d-flex justify-content-between align-items-center">
+                              <div class="db-icon">
+                                 <i class="fas fa-pencil-alt"></i>
+                              </div>
+                              <div class="db-info">
+                                 <h3>10</h3>
+                                 <h6>Exams</h6>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                     <div class="card bg-four w-100">
+                        <div class="card-body">
+                           <div class="db-widgets d-flex justify-content-between align-items-center">
+                              <div class="db-icon">
+                                 <i class="fas fa-chess-board"></i>
+                              </div>
+                              <div class="db-info">
+                                 <h3>8</h3>
+                                 <h6>Results</h6>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+
+                  <div class="col-md-12 col-lg-6">
+                     <div class="card card-chart">
+                        <div class="card-header">
+                           <div class="row align-items-center">
+                              <div class="col-6">
+                                 <h5 class="card-title">Information</h5>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card-body">
+                           <div id="pie-chart"></div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-12 col-lg-6">
+                     <div class="card card-chart">
+                        <div class="card-header">
+                           <div class="row align-items-center">
+                              <div class="col-6">
+                                 <h5 class="card-title">Students</h5>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card-body">
+                           <div id="line-chart"></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-xl-3 col-sm-6 col-12">
+                     <div class="card flex-fill fb sm-box">
+                        <i class="fab fa-facebook"></i>
+                        <h6>50,095</h6>
+                        <p>Likes</p>
+                     </div>
+                  </div>
+                  <div class="col-xl-3 col-sm-6 col-12">
+                     <div class="card flex-fill twitter sm-box">
+                        <i class="fab fa-twitter"></i>
+                        <h6>48,596</h6>
+                        <p>Follows</p>
+                     </div>
+                  </div>
+                  <div class="col-xl-3 col-sm-6 col-12">
+                     <div class="card flex-fill insta sm-box">
+                        <i class="fab fa-instagram"></i>
+                        <h6>52,085</h6>
+                        <p>Follows</p>
+                     </div>
+                  </div>
+                  <div class="col-xl-3 col-sm-6 col-12">
+                     <div class="card flex-fill linkedin sm-box">
+                        <i class="fab fa-linkedin-in"></i>
+                        <h6>69,050</h6>
+                        <p>Follows</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+        </div>
+        <!--Dashboard Layout ends-->
+
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+      // First chart: Pie Chart
+      var pieOptions = {
+         series: [44, 55, 13, 43, 22],
+         chart: {
+            width: '100%',   // Make it responsive
+            height: 350,     // Set the height of the pie chart
+            type: 'pie',
+         },
+         labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+         responsive: [{
+            breakpoint: 480,
+            options: {
+               chart: {
+                  width: 200
+               },
+               legend: {
+                  position: 'bottom'
+               }
+            }
+         }]
+      };
+
+      var pieChart = new ApexCharts(document.querySelector("#pie-chart"), pieOptions);
+      pieChart.render();
+
+      // Second chart: Line Chart
+      var lineOptions = {
+         series: [{
+            name: "Desktops",
+            data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+         }],
+         chart: {
+            height: 350,    // Set the height of the line chart
+            type: 'line',
+            zoom: {
+               enabled: false
+            }
+         },
+         dataLabels: {
+            enabled: false
+         },
+         stroke: {
+            curve: 'straight'
+         },
+         title: {
+            text: 'Product Trends by Month',
+            align: 'left'
+         },
+         grid: {
+            row: {
+               colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+               opacity: 0.5
+            },
+         },
+         xaxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+         }
+      };
+
+      var lineChart = new ApexCharts(document.querySelector("#line-chart"), lineOptions);
+      lineChart.render();
+   });
+
+</script>
+
+{% include 'include/chart-script.html' %}
 {% endblock %}

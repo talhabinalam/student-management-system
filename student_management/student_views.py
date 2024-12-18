@@ -5,6 +5,7 @@ from app.models import *
 
 
 def home(request):
+
     return render(request, "student/home.html")
 
 

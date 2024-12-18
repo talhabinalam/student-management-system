@@ -215,4 +215,3 @@ class StudentResult(models.Model):
     def __str__(self):
         return self.student.user.first_name
 
-

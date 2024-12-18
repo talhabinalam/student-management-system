@@ -1,11 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 from django.contrib import messages
 
 from app.models import *
 
 
 def home(request):
-    return render(request, 'staff/home.html')
+    staff = Staff.objects.get(user=request.user)
+    notifications = StaffNotification.objects.filter(staff=staff).order_by('-created_at')[:5]  # Show recent 5
+    context = {
+        'notifications':notifications,
+    }
+    return render(request, 'staff/home.html', context)
 
 
 def staff_notification(request):
@@ -14,6 +20,7 @@ def staff_notification(request):
     notifications = StaffNotification.objects.filter(staff=staff)
     context = {'notifications': notifications}
     return render(request, 'staff/notification.html', context)
+
 
 
 def staff_notification_status(request, id):
