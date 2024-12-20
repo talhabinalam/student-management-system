@@ -1,15 +1,16 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from student_management import views, hod_views, student_views, staff_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('base/', student_views.base,),
-
     path('', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
+    path('profile/', views.profile, name='profile'),
+    path('update_profile/', views.update_profile, name='update_profile'),
+    path('change-password/', views.change_password, name='change_password'),
 
     # hod
     path('hod/home/', hod_views.home, name='hod_home'),
@@ -49,7 +50,6 @@ urlpatterns = [
     path('hod/student/feedback/replay/', hod_views.student_feedback_replay, name='student_feedback_replay'),
     path('hod/view_attendance', hod_views.hod_view_attendance, name='hod_view_attendance'),
 
-
     # staff
     path('staff/home/', staff_views.home, name='staff_home'),
     path('staff/notification/', staff_views.staff_notification, name='staff_notification'),
@@ -62,7 +62,6 @@ urlpatterns = [
     path('staff/add_result/', staff_views.add_result, name='add_result'),
     path('staff/save_result/', staff_views.save_result, name='save_result'),
 
-
     # student
     path('student/home/', student_views.home, name='student_home'),
     path('student/notification/', student_views.student_notification, name='student_notification'),
@@ -71,11 +70,6 @@ urlpatterns = [
     path('student/feedback/', student_views.student_feedback, name='student_feedback'),
     path('student/view_attendance/', student_views.student_view_attendance, name='student_view_attendance'),
     path('student/view_result/', student_views.view_result, name='view_result'),
-
-
-    path('profile/', views.profile, name='profile'),
-    path('update_profile/', views.update_profile, name='update_profile'),
-    path('change-password/', views.change_password, name='change_password'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
